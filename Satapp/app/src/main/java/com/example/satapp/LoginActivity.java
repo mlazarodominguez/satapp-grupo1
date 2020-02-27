@@ -24,7 +24,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     IUsuarioService service;
-    Button btnLogin;
+    Button btnLogin,btnRegister;
     EditText etEmail,etPassword;
     String emailLog, passwordLog;
     @Override
@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,13 +51,15 @@ public class LoginActivity extends AppCompatActivity {
                 call.enqueue(new Callback<LoginReponse>() {
                     @Override
                     public void onResponse(Call<LoginReponse> call, Response<LoginReponse> response) {
-                        if(response.isSuccessful()){
+                        if(response.code()==201){
                             Log.e("email", emailLog);
                             Log.e("password", passwordLog);
                             Log.e("token",response.body().getToken());
                             UtilToken.setToken(LoginActivity.this, response.body().getToken());
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);
+                        }else{
+                            Toast.makeText(LoginActivity.this,"Usuario o contraseña incorrectos",Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -66,6 +69,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(i);
             }
         });
     }
