@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="text_button_login">SIGN IN</string>
+    <string name="sharedpreferences_filename">login</string>
+    <string name="jwt_key">JWT_KEY</string>
 </resources>
