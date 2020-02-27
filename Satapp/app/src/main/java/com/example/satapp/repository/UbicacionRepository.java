@@ -5,6 +5,7 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.satapp.common.MyApp;
+import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IUbicacionService;
 import com.example.satapp.retrofit.ServiceGenerator;
 
@@ -28,12 +29,15 @@ public class UbicacionRepository {
     public MutableLiveData<List<String>> getUbicacionesList() {
         final MutableLiveData<List<String>> data = new MutableLiveData<>();
 
-        Call<List<String>> call = service.getUbicaciones("");
+        Call<List<String>> call = service.getUbicaciones(UtilToken.getToken(MyApp.getContext()));
         call.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful())
-                    data.setValue(response.body());
+                    if (response.body() == null || response.body().isEmpty())
+                        Toast.makeText(MyApp.getContext(), "Es nulo", Toast.LENGTH_SHORT).show();
+                    else
+                        data.setValue(response.body());
                 else
                     Toast.makeText(MyApp.getContext(), "Error on the response from the Api", Toast.LENGTH_SHORT).show();
             }

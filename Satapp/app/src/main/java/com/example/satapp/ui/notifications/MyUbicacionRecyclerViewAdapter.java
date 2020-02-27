@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.satapp.R;
 import com.example.satapp.viewmodel.UbicacionViewModel;
@@ -39,14 +40,10 @@ public class MyUbicacionRecyclerViewAdapter extends RecyclerView.Adapter<MyUbica
         holder.mItem = mValues.get(position);
         holder.tvUbicacion.setText(holder.mItem);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.tvUbicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-        /*        if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }*/
+                Toast.makeText(context, "Aquí va el filtrao de los equipos de las aulas", Toast.LENGTH_SHORT).show();
             }
         });
     }

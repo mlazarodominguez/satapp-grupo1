@@ -8,6 +8,6 @@ import retrofit2.http.Query;
 
 public interface IUbicacionService {
 
-    @GET("/inventariable/ubicaciones")
+    @GET("inventariable/ubicaciones")
     Call<List<String>> getUbicaciones(@Query("access_token") String access_token);
 }

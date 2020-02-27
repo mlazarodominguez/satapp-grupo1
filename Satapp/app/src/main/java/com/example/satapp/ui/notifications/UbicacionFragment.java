@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.satapp.R;
-import com.example.satapp.common.MyApp;
 import com.example.satapp.viewmodel.UbicacionViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UbicacionFragment extends Fragment {
@@ -29,6 +30,7 @@ public class UbicacionFragment extends Fragment {
     private UbicacionViewModel ubicacionViewModel;
     MyUbicacionRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
+    private List<String> ubicacionesList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,6 +56,7 @@ public class UbicacionFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        ubicacionViewModel = new ViewModelProvider(getActivity()).get(UbicacionViewModel.class);
     }
 
     @Override
@@ -70,31 +73,30 @@ public class UbicacionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new MyUbicacionRecyclerViewAdapter(
-                    getActivity(), null, ubicacionViewModel
-            );
+            ubicacionesList = new ArrayList<>();
 
+            adapter = new MyUbicacionRecyclerViewAdapter(
+                    getActivity(), ubicacionesList, ubicacionViewModel
+            );
             recyclerView.setAdapter(adapter);
+
+            loadUbicaciones();
         }
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        //TODO IMPORTANTE
+    private void loadUbicaciones() {
         if (ubicacionViewModel.getListUbicaciones() == null)
-            Toast.makeText(getActivity(), "No hay ubicaciones creadas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "No hay ubicaciones creados", Toast.LENGTH_SHORT).show();
         else {
             ubicacionViewModel.getListUbicaciones().observe(getActivity(), new Observer<List<String>>() {
                 @Override
-                public void onChanged(List<String> ubicaciones) {
-                    adapter.setData(ubicaciones);
+                public void onChanged(List<String> strings) {
+                    ubicacionesList = strings;
+                    adapter.setData(ubicacionesList);
                 }
             });
         }
-
     }
 
 }
