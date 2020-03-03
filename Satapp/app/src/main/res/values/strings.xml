@@ -15,4 +15,5 @@
     <string name="text_nombre">Name</string>
     <string name="text_created_at">Nov 6th, 2017</string>
     <string name="text_update_at">Nov 6th, 2017</string>
+    <string name="text_edit">Editar</string>
 </resources>

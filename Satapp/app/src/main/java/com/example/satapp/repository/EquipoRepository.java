@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.satapp.common.MyApp;
 import com.example.satapp.models.Equipo;
+import com.example.satapp.models.User;
 import com.example.satapp.retrofit.IEquipoService;
 import com.example.satapp.retrofit.ServiceGenerator;
 
@@ -47,6 +48,24 @@ public class EquipoRepository {
                      }
         );
         return data;
+    }
+
+    public MutableLiveData<Equipo>getInventaribleToEdit(String token, String id) {
+        final MutableLiveData<Equipo> inventariableEdit = new MutableLiveData<>();
+        Call<Equipo> editInventariableCall = service.editInventariable(token,id);
+        editInventariableCall.enqueue(new Callback<Equipo>() {
+            @Override
+            public void onResponse(Call<Equipo> call, Response<Equipo> response) {
+                if(response.isSuccessful()){
+                    inventariableEdit.postValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<Equipo> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return inventariableEdit;
     }
 
 

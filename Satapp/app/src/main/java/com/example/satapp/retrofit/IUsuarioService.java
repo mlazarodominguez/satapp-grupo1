@@ -9,6 +9,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface IUsuarioService {
@@ -18,5 +20,4 @@ public interface IUsuarioService {
 
     @GET("users/me")
     Call<User> profile(@Query("access_token")String token);
-
 }
