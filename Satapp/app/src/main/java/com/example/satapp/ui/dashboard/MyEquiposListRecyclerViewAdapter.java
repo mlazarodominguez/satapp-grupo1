@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.satapp.MainActivity;
 import com.example.satapp.R;
-import com.example.satapp.TareasEquipoActivity;
+import com.example.satapp.TicketsEquipoActivity;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.viewmodel.EquipoViewModel;
 
@@ -54,7 +53,7 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ctx, TareasEquipoActivity.class);
+                Intent intent = new Intent(ctx, TicketsEquipoActivity.class);
                 intent.putExtra("idEquipo", holder.mItem.getId());
                 ctx.startActivity(intent);
             }
