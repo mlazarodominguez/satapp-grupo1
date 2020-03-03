@@ -3,7 +3,6 @@ package com.example.satapp.ui.dashboard;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,17 +16,12 @@ import android.view.ViewGroup;
 
 import com.example.satapp.R;
 import com.example.satapp.models.Equipo;
-import com.example.satapp.ui.dashboard.dummy.DummyContent;
-import com.example.satapp.ui.dashboard.dummy.DummyContent.DummyItem;
+import com.example.satapp.models.UtilToken;
+import com.example.satapp.viewmodel.EquipoViewModel;
 
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class EquiposListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -37,6 +31,7 @@ public class EquiposListFragment extends Fragment {
     private Context context;
     private RecyclerView recyclerView;
     EquipoViewModel equipoViewModel;
+    UtilToken utilToken;
 
     public EquiposListFragment() {
     }
@@ -69,8 +64,8 @@ public class EquiposListFragment extends Fragment {
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            context = view.getContext();
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -95,7 +90,8 @@ public class EquiposListFragment extends Fragment {
     }
 
     private void loadEquipoData(){
-        equipoViewModel.getSeries().observe(getActivity(), new Observer<List<Equipo>>(){
+
+        equipoViewModel.getEquipos(utilToken.getToken(context)).observe(getActivity(), new Observer<List<Equipo>>(){
 
             @Override
             public void onChanged(List<Equipo> equipos) {

@@ -1,13 +1,13 @@
-package com.example.satapp.ui.dashboard;
+package com.example.satapp.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.satapp.models.Equipo;
+import com.example.satapp.repository.EquipoRepository;
 
 import java.util.List;
 
@@ -24,8 +24,8 @@ public class EquipoViewModel extends AndroidViewModel {
         this.idEquipoSeleccionado.setValue(null);
     }
 
-    public MutableLiveData<List<Equipo>> getSeries() {
-        equipos = equipoRepository.getEquipos();
+    public MutableLiveData<List<Equipo>> getEquipos(String token) {
+        equipos = equipoRepository.getEquipos(token);
         return equipos;
     }
 

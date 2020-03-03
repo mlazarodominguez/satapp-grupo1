@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface IEquipoService {
 
     @GET("inventariable")
-    Call<List<Equipo>> getEquipos();
+    Call<List<Equipo>> getEquipos(@Query("access_token") String token);
 
     @GET("inventariable/{id}")
     Call<Equipo> getEquipoDetalles(@Path("id")String id);

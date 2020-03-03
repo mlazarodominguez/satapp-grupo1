@@ -1,4 +1,4 @@
-package com.example.satapp.ui.dashboard;
+package com.example.satapp.repository;
 
 import android.widget.Toast;
 
@@ -27,9 +27,9 @@ public class EquipoRepository {
         equipos = null;
     }
 
-    public MutableLiveData<List<Equipo>> getEquipos(){
+    public MutableLiveData<List<Equipo>> getEquipos(String token){
         final MutableLiveData<List<Equipo>> data = new MutableLiveData<>();
-        Call<List<Equipo>> call = service.getEquipos();
+        Call<List<Equipo>> call = service.getEquipos(token);
         call.enqueue(new Callback<List<Equipo>>() {
                          @Override
                          public void onResponse(Call<List<Equipo>> call, Response<List<Equipo>> response) {

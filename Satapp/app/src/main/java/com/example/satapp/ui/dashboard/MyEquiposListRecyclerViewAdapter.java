@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.satapp.R;
 import com.example.satapp.models.Equipo;
+import com.example.satapp.viewmodel.EquipoViewModel;
 
 
 import java.util.List;
