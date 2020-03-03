@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.satapp.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_equipo"
+        android:name="com.example.satapp.ui.dashboard.EquiposListFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_equiposlist_list" />
 
     <fragment
         android:id="@+id/navigation_notifications"

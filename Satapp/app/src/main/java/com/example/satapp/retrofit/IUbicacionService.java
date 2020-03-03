@@ -1,5 +1,7 @@
 package com.example.satapp.retrofit;
 
+import com.example.satapp.models.TicketsResponse;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -10,4 +12,7 @@ public interface IUbicacionService {
 
     @GET("inventariable/ubicaciones")
     Call<List<String>> getUbicaciones(@Query("access_token") String access_token);
+
+    @GET("/ticket/inventariable/:id")
+    Call<List<TicketsResponse>> getListTicketsEquipo(@Query("access_token") String access_token);
 }

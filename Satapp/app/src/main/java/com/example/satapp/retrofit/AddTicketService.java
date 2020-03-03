@@ -18,7 +18,8 @@ public interface AddTicketService {
     Call<AddTicketResponse> addTicket(
             @Part List<MultipartBody.Part> avatar,
             @Part("titulo") RequestBody titulo,
-            @Part("descripcion") RequestBody descripcion
+            @Part("descripcion") RequestBody descripcion,
+            @Part("access_token") RequestBody access_token
     );
 }
 
