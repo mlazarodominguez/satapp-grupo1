@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +33,9 @@ public class perfil extends Fragment {
 
     private UserProfileViewModel userProfileViewModel;
     public String jwt;
-    public TextView tvnombre, tvEmail, tvCreatedAt, tvUpdateAt;
-    public ImageView ivFoto;
+    public TextView tvnombre, tvEmail, tvCreatedAt, tvUpdateAt, tvRole;
+    public ImageView ivFoto, ivEmail, ivRol;
+    public ProgressBar pbLoading;
 
     public perfil() {
         // Required empty public constructor
@@ -56,20 +58,36 @@ public class perfil extends Fragment {
         tvEmail = v.findViewById(R.id.textViewEmail);
         tvCreatedAt = v.findViewById(R.id.textViewCreatedAt);
         tvUpdateAt = v.findViewById(R.id.textViewUpdateAt);
+        tvRole = v.findViewById(R.id.textViewRole);
+        pbLoading = v.findViewById(R.id.progressBarLoading);
+        ivEmail = v.findViewById(R.id.imageViewEmail);
+        ivRol = v.findViewById(R.id.imageViewRol);
         loadData();
         return v;
     }
 
     public void loadData (){
+        pbLoading.setVisibility(View.VISIBLE);
+        ivFoto.setVisibility(View.GONE);
+        tvnombre.setVisibility(View.GONE);
+        tvEmail.setVisibility(View.GONE);
+        tvCreatedAt.setVisibility(View.GONE);
+        tvUpdateAt.setVisibility(View.GONE);
+        tvRole.setVisibility(View.GONE);
+        ivEmail.setVisibility(View.GONE);
+        ivRol.setVisibility(View.GONE);
+
         jwt = UtilToken.getToken(getContext());
         userProfileViewModel.getCurrentUser(jwt).observe(getActivity(),new Observer<User>(){
             @Override
             public void onChanged(User user){
+                pbLoading.setVisibility(View.GONE);
                 LocalDate createdAt = ConvertToDate(user.getCreatedAt());
                 LocalDate updateAt = ConvertToDate(user.getUpdatedAt());
                 DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
 
                 tvnombre.setText(user.getName());
+                tvRole.setText(user.getRole());
                 tvEmail.setText(user.getEmail());
                 tvCreatedAt.setText("Cuenta creada el: "+createdAt.toString(fmt));
                 tvUpdateAt.setText("Última actualización : "+updateAt.toString(fmt));
@@ -79,6 +97,15 @@ public class perfil extends Fragment {
                         .load(user.getPicture())
                         .centerCrop()
                         .into(ivFoto);
+
+                ivFoto.setVisibility(View.VISIBLE);
+                tvnombre.setVisibility(View.VISIBLE);
+                tvEmail.setVisibility(View.VISIBLE);
+                tvCreatedAt.setVisibility(View.VISIBLE);
+                tvUpdateAt.setVisibility(View.VISIBLE);
+                tvRole.setVisibility(View.VISIBLE);
+                ivEmail.setVisibility(View.VISIBLE);
+                ivRol.setVisibility(View.VISIBLE);
             }
         });
 
