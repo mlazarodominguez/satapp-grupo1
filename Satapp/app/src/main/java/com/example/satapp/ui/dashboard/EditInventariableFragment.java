@@ -35,8 +35,8 @@ public class EditInventariableFragment extends Fragment {
     public String jwt, idUse;
     public ProgressBar progressBar;
     public Button btnSend;
-    public AppCompatEditText appCompatEditTextCod, appCompatEditTextTipo, appCompatEditTextUbi;
-    public EditText etNombre, etDescription;
+    public AppCompatEditText appCompatEditTextCod, appCompatEditTextTipo;
+    public EditText etNombre, etDescription, etUbi;
 
     public EditInventariableFragment() {
         // Required empty public constructor
@@ -56,16 +56,16 @@ public class EditInventariableFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_inventariable, container, false);
         appCompatEditTextCod = view.findViewById(R.id.hintTextCod);
         appCompatEditTextTipo = view.findViewById(R.id.hintTextTipo);
-        appCompatEditTextUbi = view.findViewById(R.id.hintTextUbi);
 
         tilCod = view.findViewById(R.id.textInputLayoutCod);
         tilTipo = view.findViewById(R.id.textInputLayoutTipo);
+        tilUbi = view.findViewById(R.id.textInputLayoutUbi);
 
         progressBar = view.findViewById(R.id.progressBarLoadEditEquipo);
         btnSend = view.findViewById(R.id.buttonSendEditEquipo);
         etNombre = view.findViewById(R.id.editTextNombre);
         etDescription = view.findViewById(R.id.editTextDescription);
-        tilUbi = view.findViewById(R.id.textInputLayoutUbi);
+        etUbi = view.findViewById(R.id.editTextUbi);
 
         progressBar.setVisibility(View.VISIBLE);
         etNombre.setVisibility(View.GONE);
@@ -73,6 +73,7 @@ public class EditInventariableFragment extends Fragment {
         appCompatEditTextCod.setVisibility(View.GONE);
         appCompatEditTextTipo.setVisibility(View.GONE);
         btnSend.setVisibility(View.GONE);
+        etUbi.setVisibility(View.GONE);
 
         bundle = getActivity().getIntent().getExtras();
         jwt = UtilToken.getToken(getContext());
@@ -93,16 +94,17 @@ public class EditInventariableFragment extends Fragment {
                 appCompatEditTextTipo.setVisibility(View.VISIBLE);
                 btnSend.setVisibility(View.VISIBLE);
                 etNombre.setVisibility(View.VISIBLE);
+                etUbi.setVisibility(View.VISIBLE);
+
+                etUbi.setText(equipo.getUbicacion());
                 appCompatEditTextCod.setText(equipo.getCodigo());
                 appCompatEditTextTipo.setText(equipo.getTipo());
                 appCompatEditTextCod.setEnabled(false);
                 appCompatEditTextTipo.setEnabled(false);
+                etUbi.setEnabled(false);
 
                 etNombre.setText(equipo.getNombre());
                 etDescription.setText(equipo.getDescripcion());
-                if (equipo.getUbicacion()==null){
-
-                }
 
                 btnSend.setOnClickListener(new View.OnClickListener() {
                     @Override
