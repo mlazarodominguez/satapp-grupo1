@@ -24,4 +24,13 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/imageViewEquipo"
         app:layout_constraintTop_toTopOf="@+id/imageViewEquipo" />
+
+    <Button
+        android:id="@+id/buttonEditMomentaneo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

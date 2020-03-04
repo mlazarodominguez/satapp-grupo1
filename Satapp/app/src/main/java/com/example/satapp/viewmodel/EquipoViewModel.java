@@ -14,8 +14,9 @@ import java.util.List;
 public class EquipoViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Equipo>> equipos;
+    private MutableLiveData<Equipo> equipo;
     EquipoRepository equipoRepository;
-    MutableLiveData<Integer> idEquipoSeleccionado;
+    MutableLiveData<String> idEquipoSeleccionado;
 
     public EquipoViewModel(@NonNull Application application) {
         super(application);
@@ -29,6 +30,11 @@ public class EquipoViewModel extends AndroidViewModel {
         return equipos;
     }
 
+    public void setEquipo(String id) {
+        this.idEquipoSeleccionado.setValue(id);
+    }
 
-
+    public MutableLiveData<String> getEquipo() {
+        return idEquipoSeleccionado;
+    }
 }
