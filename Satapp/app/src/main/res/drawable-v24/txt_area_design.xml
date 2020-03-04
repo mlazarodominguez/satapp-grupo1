@@ -5,7 +5,7 @@
         <layer-list>
             <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
                 <shape android:shape="rectangle">
-                    <stroke android:width="2dp" android:color="@color/amber_500" />
+                    <stroke android:width="2dp" android:color="@color/colorAccent" />
                     <solid android:color="@color/transparent" />
                 </shape>
             </item>
@@ -17,7 +17,7 @@
         <layer-list>
             <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
                 <shape android:shape="rectangle">
-                    <stroke android:width="2dp" android:color="@color/amber_500" />
+                    <stroke android:width="2dp" android:color="@color/colorAccent" />
                     <solid android:color="@color/transparent" />
                 </shape>
             </item>

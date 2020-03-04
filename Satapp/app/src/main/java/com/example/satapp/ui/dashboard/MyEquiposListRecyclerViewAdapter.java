@@ -56,8 +56,9 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ctx, EditInventariableActivity.class);
-                ctx.startActivity(i);
+                if (equipoViewModel != null) {
+                    equipoViewModel.setEquipo(holder.mItem.getId());
+                }
             }
         });
 

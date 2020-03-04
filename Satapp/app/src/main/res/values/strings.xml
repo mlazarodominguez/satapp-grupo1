@@ -16,4 +16,10 @@
     <string name="text_created_at">Nov 6th, 2017</string>
     <string name="text_update_at">Nov 6th, 2017</string>
     <string name="text_edit">Editar</string>
+    <string name="hint_name">Nombre</string>
+    <string name="hint_description">Descripción</string>
+    <string name="text_send">Enviar</string>
+    <string name="hint_type">Tipo</string>
+    <string name="hint_cod">Código</string>
+    <string name="hint_ubi">Ubicación</string>
 </resources>

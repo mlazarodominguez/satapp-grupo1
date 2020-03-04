@@ -50,14 +50,15 @@ public class EquipoRepository {
         return data;
     }
 
-    public MutableLiveData<Equipo>getInventaribleToEdit(String token, String id) {
+
+    public MutableLiveData<Equipo>getInventariable(String id, String token) {
         final MutableLiveData<Equipo> inventariableEdit = new MutableLiveData<>();
-        Call<Equipo> editInventariableCall = service.editInventariable(token,id);
+        Call<Equipo> editInventariableCall = service.getEquipoDetalles(id,token);
         editInventariableCall.enqueue(new Callback<Equipo>() {
             @Override
             public void onResponse(Call<Equipo> call, Response<Equipo> response) {
                 if(response.isSuccessful()){
-                    inventariableEdit.postValue(response.body());
+                    inventariableEdit.setValue(response.body());
                 }
             }
             @Override
@@ -66,6 +67,23 @@ public class EquipoRepository {
             }
         });
         return inventariableEdit;
+    }
+
+    public void getInventaribleToEdit(String id, String token,Equipo equipo) {
+        final MutableLiveData<Equipo> inventariableEdit = new MutableLiveData<>();
+        Call<Equipo> inventariableCall = service.editInventariable(id,token,equipo);
+        inventariableCall.enqueue(new Callback<Equipo>() {
+            @Override
+            public void onResponse(Call<Equipo> call, Response<Equipo> response) {
+                if(response.isSuccessful()){
+                    inventariableEdit.setValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<Equipo> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
