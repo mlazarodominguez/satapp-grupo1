@@ -18,10 +18,10 @@ public class TicketsEquipoViewModel extends AndroidViewModel {
     public TicketsEquipoViewModel(@NonNull Application application) {
         super(application);
         ubicacionRepository = new UbicacionRepository();
-        listTicketsEquipo = ubicacionRepository.getTicketsEquipoList();
     }
 
-    public MutableLiveData<List<TicketsResponse>> getListTicketsEquipo() {
+    public MutableLiveData<List<TicketsResponse>> getListTicketsEquipo(String id) {
+        listTicketsEquipo = ubicacionRepository.getTicketsEquipoList(id);
         return listTicketsEquipo;
     }
 }

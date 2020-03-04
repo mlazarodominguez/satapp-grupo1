@@ -15,4 +15,8 @@
     <string name="text_nombre">Name</string>
     <string name="text_created_at">Nov 6th, 2017</string>
     <string name="text_update_at">Nov 6th, 2017</string>
+    <string name="text_fichero">Subir Imagen</string>
+    <string name="hint_titulo">Titulo</string>
+    <string name="hint_descripcion">Descripción</string>
+    <string name="text_add_ticket">Crear Ticket</string>
 </resources>

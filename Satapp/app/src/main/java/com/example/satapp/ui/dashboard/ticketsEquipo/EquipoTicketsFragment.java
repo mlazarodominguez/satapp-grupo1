@@ -32,6 +32,7 @@ public class EquipoTicketsFragment extends Fragment {
     MyEquipoTicketsRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     private List<TicketsResponse> ticketsList;
+    Bundle extras;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -57,6 +58,7 @@ public class EquipoTicketsFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        extras = getActivity().getIntent().getExtras();
         ticketsEquipoViewModel = new ViewModelProvider(getActivity()).get(TicketsEquipoViewModel.class);
     }
 
@@ -87,10 +89,10 @@ public class EquipoTicketsFragment extends Fragment {
     }
 
     private void loadTicketsTarea() {
-        if (ticketsEquipoViewModel.getListTicketsEquipo() == null)
+        if (ticketsEquipoViewModel.getListTicketsEquipo(extras.getString("idEquipo")) == null)
             Toast.makeText(getActivity(), "No hay tickets creados para este equipo", Toast.LENGTH_SHORT).show();
         else {
-            ticketsEquipoViewModel.getListTicketsEquipo().observe(getActivity(), new Observer<List<TicketsResponse>>() {
+            ticketsEquipoViewModel.getListTicketsEquipo(extras.getString("idEquipo")).observe(getActivity(), new Observer<List<TicketsResponse>>() {
                 @Override
                 public void onChanged(List<TicketsResponse> ticketsResponses) {
                     ticketsList = ticketsResponses;
