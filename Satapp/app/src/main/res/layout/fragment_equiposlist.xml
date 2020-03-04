@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageViewEquipo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300px"
+        android:layout_height="300px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,6 +20,7 @@
         android:id="@+id/textViewTituloEquipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/imageViewEquipo"
         app:layout_constraintTop_toTopOf="@+id/imageViewEquipo" />

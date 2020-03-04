@@ -73,10 +73,7 @@ public class EquiposListFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.nuevoEquipo:
                 DialogFragment dialog = new NuevoEquipoDialogFragment();
-                dialog.setTargetFragment(this,0);
                 dialog.show(getFragmentManager(),"NuevoEquipoDialogFragment");
-
-
 
                 break;
 
