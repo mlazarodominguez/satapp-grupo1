@@ -26,13 +26,16 @@ public interface IEquipoService {
 
     @Multipart
     @POST("inventariable")
-    Call<Equipo> nuevoEquipo(@Query("access_token") String token,
-                             @Part MultipartBody.Part imagen,
-                             @Part("codigo") RequestBody codigo,
+    Call<Equipo> nuevoEquipo(@Part MultipartBody.Part imagen,
                              @Part("nombre") RequestBody nombre,
                              @Part("tipo") RequestBody tipo,
-                             @Part("descripcion") RequestBody descripcion);
+                             @Part("descripcion") RequestBody descripcion,
+                             @Part("ubicacion") RequestBody ubicacion,
+                             @Query("access_token") String token);
 
     @GET("inventariable/{id}")
     Call<Equipo> getEquipoDetalles(@Path("id")String id);
+
+    @GET("inventariable/tipos")
+    Call<List<String>> getAllTipos(@Query("access_token") String token);
 }
