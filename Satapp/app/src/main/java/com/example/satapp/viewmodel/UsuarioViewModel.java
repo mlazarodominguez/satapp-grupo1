@@ -15,6 +15,7 @@ public class UsuarioViewModel extends AndroidViewModel {
 
     MutableLiveData<List<User>> usuarios;
     UsuariosRepository usuariosRepository;
+    MutableLiveData<User> user;
 
 
     public UsuarioViewModel(@NonNull Application application){
@@ -32,5 +33,14 @@ public class UsuarioViewModel extends AndroidViewModel {
     public MutableLiveData<List<User>> getUsuariosNoValidados(){
         usuarios = usuariosRepository.getUsuariosNoValidados();
         return  usuarios;
+    }
+
+    public MutableLiveData<User> validarUsuario(String id){
+        user = usuariosRepository.validarUsuario(id);
+        return user;
+    }
+
+    public void borrarUsuario(String id){
+        usuariosRepository.borrarUsuario(id);
     }
 }
