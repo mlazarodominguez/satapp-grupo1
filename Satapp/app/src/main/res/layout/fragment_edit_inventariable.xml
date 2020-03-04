@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:textColorHint="@color/grey_40">
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editTextUbi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
