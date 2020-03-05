@@ -7,10 +7,29 @@
     android:orientation="horizontal">
 
 
+    <TextView
+        android:id="@+id/textViewUbicacionEquipo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewTipoEquipo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTipoEquipo" />
+
+    <Button
+        android:id="@+id/buttonBorrarEquipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Borrar"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonEditMomentaneo"
+        app:layout_constraintStart_toEndOf="@+id/buttonEditMomentaneo" />
+
     <ImageView
         android:id="@+id/imageViewEquipo"
-        android:layout_width="300px"
-        android:layout_height="300px"
+        android:layout_width="400px"
+        android:layout_height="400px"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,10 +37,13 @@
 
     <TextView
         android:id="@+id/textViewTituloEquipo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewEquipo"
         app:layout_constraintTop_toTopOf="@+id/imageViewEquipo" />
 
@@ -29,8 +51,20 @@
         android:id="@+id/buttonEditMomentaneo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="32dp"
+        android:text="Editar"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewEquipo"
+        app:layout_constraintStart_toEndOf="@+id/imageViewEquipo" />
+
+    <TextView
+        android:id="@+id/textViewTipoEquipo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTituloEquipo"
+        app:layout_constraintStart_toStartOf="@+id/textViewTituloEquipo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTituloEquipo" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
