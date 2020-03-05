@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        equipoViewModel.getEquipo2().observe(MainActivity.this, new Observer<String>() {
+        equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
             @Override
             public void onChanged(String equipoId) {
                 if(equipoId != null) {

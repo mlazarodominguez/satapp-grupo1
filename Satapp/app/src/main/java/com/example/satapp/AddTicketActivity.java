@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.satapp.common.Constantes;
 import com.example.satapp.retrofit.AddTicketService;
 import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.AddTicketViewModel;
@@ -106,7 +107,7 @@ public class AddTicketActivity extends AppCompatActivity {
 
                         RequestBody titulo = RequestBody.create(MultipartBody.FORM, etTitulo.getText().toString());
                         RequestBody descripcion = RequestBody.create(MultipartBody.FORM, etDescripcion.getText().toString());
-                        RequestBody id = RequestBody.create(MultipartBody.FORM, extras.getString("idEquipo"));
+                        RequestBody id = RequestBody.create(MultipartBody.FORM, extras.getString(Constantes.EXTRA_ID_INVENTARIABLE));
 
                         if(etTitulo.getText().toString().isEmpty())
                             etTitulo.setError("El titulo no puede estar vacío");
@@ -121,6 +122,8 @@ public class AddTicketActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                Intent intent = new Intent(AddTicketActivity.this, TicketsEquipoActivity.class);
+                startActivity(intent);
             }
         });
 
