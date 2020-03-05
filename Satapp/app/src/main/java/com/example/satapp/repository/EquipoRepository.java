@@ -143,7 +143,7 @@ public class EquipoRepository {
             }
             @Override
             public void onFailure(Call<Equipo> call, Throwable t) {
-                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApp.getContext(), "Error AL EDITAR", Toast.LENGTH_LONG).show();
             }
         });
     }
