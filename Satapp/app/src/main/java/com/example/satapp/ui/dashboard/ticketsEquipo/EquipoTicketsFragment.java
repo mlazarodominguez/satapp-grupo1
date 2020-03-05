@@ -1,6 +1,7 @@
 package com.example.satapp.ui.dashboard.ticketsEquipo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.satapp.AddTicketActivity;
 import com.example.satapp.R;
+import com.example.satapp.common.Constantes;
 import com.example.satapp.models.TicketsResponse;
 import com.example.satapp.viewmodel.TicketsEquipoViewModel;
 
@@ -89,13 +92,15 @@ public class EquipoTicketsFragment extends Fragment {
     }
 
     private void loadTicketsTarea() {
-        if (ticketsEquipoViewModel.getListTicketsEquipo(extras.getString("idEquipo")) == null)
+        if (ticketsEquipoViewModel.getListTicketsEquipo(extras.getString(Constantes.EXTRA_ID_INVENTARIABLE)) == null)
             Toast.makeText(getActivity(), "No hay tickets creados para este equipo", Toast.LENGTH_SHORT).show();
         else {
-            ticketsEquipoViewModel.getListTicketsEquipo(extras.getString("idEquipo")).observe(getActivity(), new Observer<List<TicketsResponse>>() {
+            ticketsEquipoViewModel.getListTicketsEquipo(extras.getString(Constantes.EXTRA_ID_INVENTARIABLE)).observe(getActivity(), new Observer<List<TicketsResponse>>() {
                 @Override
                 public void onChanged(List<TicketsResponse> ticketsResponses) {
                     ticketsList = ticketsResponses;
+                    Intent intent = new Intent(getActivity(), AddTicketActivity.class);
+                    intent.putExtra("", "");
                     adapter.setData(ticketsList);
                 }
             });

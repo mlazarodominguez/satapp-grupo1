@@ -101,9 +101,9 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ctx, TicketsEquipoActivity.class);
-                intent.putExtra("idEquipo", holder.mItem.getId());
-                ctx.startActivity(intent);
+                if (equipoViewModel != null) {
+                    equipoViewModel.setEquipo(holder.mItem.getId());
+                }
             }
         });
 

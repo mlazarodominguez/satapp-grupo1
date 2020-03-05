@@ -20,7 +20,7 @@ public class TicketsEquipoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: cambiar clase que direcciona cuando se cree y funciona bien la peticion de lista de tickets
-                Intent intent = new Intent(TicketsEquipoActivity.this, MainActivity.class);
+                Intent intent = new Intent(TicketsEquipoActivity.this, AddTicketActivity.class);
                 startActivity(intent);
             }
         });

@@ -4,7 +4,9 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
+import com.example.satapp.models.AddTicketResponse;
 import com.example.satapp.repository.AddTicketRepository;
 
 import java.util.List;
@@ -20,9 +22,10 @@ public class AddTicketViewModel extends AndroidViewModel {
         addTicketRepository = new AddTicketRepository();
     }
 
-    public void addTicket(List<MultipartBody.Part> avatar,
-                          RequestBody titulo,
-                          RequestBody descripcion) {
-        addTicketRepository.addTicket(avatar, titulo, descripcion);
+    public MutableLiveData<AddTicketResponse> addTicket(RequestBody titulo,
+                                                        RequestBody descripcion,
+                                                        RequestBody inventariable,
+                                                        List<MultipartBody.Part> fotos) {
+        return addTicketRepository.addTicket(titulo, descripcion, inventariable, fotos);
     }
 }

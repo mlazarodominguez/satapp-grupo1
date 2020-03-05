@@ -18,9 +18,10 @@ public interface AddTicketService {
     @POST("ticket")
     Call<AddTicketResponse> addTicket(
             @Query("access_token") String access_token,
-            @Part List<MultipartBody.Part> avatar,
             @Part("titulo") RequestBody titulo,
-            @Part("descripcion") RequestBody descripcion
+            @Part("descripcion") RequestBody descripcion,
+            @Part("inventariable") RequestBody inventariable,
+            @Part List<MultipartBody.Part> fotos
     );
 }
 
