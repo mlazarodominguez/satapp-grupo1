@@ -37,22 +37,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
 
     <TextView
-        android:id="@+id/textViewInventariable"
+        android:id="@+id/textViewEstado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@id/textViewCreadoPor"
         app:layout_constraintTop_toBottomOf="@id/textViewCreadoPor" />
-
-    <TextView
-        android:id="@+id/textViewEstado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/textViewInventariable"
-        app:layout_constraintTop_toBottomOf="@id/textViewInventariable" />
 
     <TextView
         android:id="@+id/textViewFechaCreacion"

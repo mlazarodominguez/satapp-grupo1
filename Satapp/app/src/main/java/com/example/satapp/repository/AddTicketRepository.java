@@ -32,7 +32,7 @@ public class AddTicketRepository {
                                                         RequestBody descripcion) {
         final MutableLiveData<AddTicketResponse> data = new MutableLiveData<>();
 
-        Call<AddTicketResponse> call = service.addTicket(avatar, titulo, descripcion, UtilToken.getToken(MyApp.getContext()));
+        Call<AddTicketResponse> call = service.addTicket(UtilToken.getToken(MyApp.getContext()), avatar, titulo, descripcion);
         call.enqueue(new Callback<AddTicketResponse>() {
             @Override
             public void onResponse(Call<AddTicketResponse> call, Response<AddTicketResponse> response) {

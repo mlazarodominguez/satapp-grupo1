@@ -42,7 +42,6 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         // TODO: Una vez averiguado el json que devuelve la peticion añadir los atributos necesarios para mostrar
         holder.tvTitulo.setText(holder.mItem.getTitulo());
         holder.tvCreadoPor.setText("Creado por: " + holder.mItem.getCreadoPor().getName());
-        holder.tvInventariable.setText("Equipo: " + holder.mItem.getInventariable());
         holder.tvEstado.setText("Estado: " + holder.mItem.getEstado());
         holder.tvFechaCreacion.setText("Creado: " + holder.mItem.getFechaCreacion());
         holder.tvDescripcion.setText("Descripción: " + holder.mItem.getDescripcion());
@@ -80,7 +79,6 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         public final ImageView ivFoto;
         public final TextView tvTitulo;
         public final TextView tvCreadoPor;
-        public final TextView tvInventariable;
         public final TextView tvEstado;
         public final TextView tvFechaCreacion;
         public final TextView tvDescripcion;
@@ -92,7 +90,6 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
             ivFoto = view.findViewById(R.id.imageViewFotoTicket);
             tvTitulo = view.findViewById(R.id.textViewTitulo);
             tvCreadoPor = view.findViewById(R.id.textViewCreadoPor);
-            tvInventariable = view.findViewById(R.id.textViewInventariable);
             tvEstado = view.findViewById(R.id.textViewEstado);
             tvFechaCreacion = view.findViewById(R.id.textViewFechaCreacion);
             tvDescripcion = view.findViewById(R.id.textViewDescripcion);

@@ -1,6 +1,5 @@
 package com.example.satapp.repository;
 
-import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -23,13 +22,11 @@ public class UbicacionRepository {
 
     MutableLiveData<List<String>> ubicacionesList;
     MutableLiveData<List<TicketsResponse>> ticketsEquipoList;
-    Intent intent;
 
     public UbicacionRepository() {
         service = serviceGenerator.createService(IUbicacionService.class);
         ubicacionesList = null;
         ticketsEquipoList = null;
-        //intent = Intent.getIntent();
     }
 
     public MutableLiveData<List<String>> getUbicacionesList() {
@@ -65,7 +62,7 @@ public class UbicacionRepository {
             public void onResponse(Call<List<TicketsResponse>> call, Response<List<TicketsResponse>> response) {
                 if (response.isSuccessful())
                     if (response.body() == null || response.body().isEmpty())
-                        Toast.makeText(MyApp.getContext(), "Es nulo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApp.getContext(), "Es nulo o no hay tickets para este equipo", Toast.LENGTH_SHORT).show();
                     else
                         data.setValue(response.body());
                 else
