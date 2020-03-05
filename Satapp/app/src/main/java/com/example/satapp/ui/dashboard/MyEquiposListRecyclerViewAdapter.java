@@ -63,7 +63,6 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
 
         IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
 
-
         Call<ResponseBody> imagenEquipo = service.getImagenEquipo(holder.mItem.getId(),(utilToken.getToken(ctx)));
 
         imagenEquipo.enqueue(new Callback<ResponseBody>() {

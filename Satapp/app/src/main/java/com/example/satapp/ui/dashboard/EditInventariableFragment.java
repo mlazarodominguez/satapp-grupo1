@@ -32,7 +32,10 @@ import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.viewmodel.EquipoEditViewModel;
 import com.example.satapp.viewmodel.EquipoViewModel;
+import com.example.satapp.viewmodel.UbicacionViewModel;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 
@@ -41,15 +44,18 @@ public class EditInventariableFragment extends Fragment {
     public TextInputLayout tilCod, tilTipo, tilUbi, tilNombre, tilDescription;
     public EquipoEditViewModel equipoEditViewModel;
     public EquipoViewModel equipoViewModel;
+    public UbicacionViewModel ubicacionViewModel;
     public Bundle bundle;
     public String jwt, idUse;
     public ProgressBar progressBar;
     public Button btnSend;
-    public AppCompatEditText appCompatEditTextCod, appCompatEditTextTipo,appCompatEditTextUbi;
+    public AppCompatEditText appCompatEditTextCod, appCompatEditTextTipo;
     public EditText etNombre, etDescription, etUbi;
     public Spinner miSpinner;
     public ImageView ivFoto;
     public Button btnCambiarImagen;
+    public String ubiacion;
+
     public EditInventariableFragment() {
         // Required empty public constructor
     }
@@ -63,7 +69,7 @@ public class EditInventariableFragment extends Fragment {
         idUse = bundle.getString(Constantes.EXTRA_ID_INVENTARIABLE);
         equipoViewModel = new ViewModelProvider(getActivity()).get(EquipoViewModel.class);
         equipoEditViewModel = new ViewModelProvider(getActivity()).get(EquipoEditViewModel.class);
-
+        ubicacionViewModel = new ViewModelProvider(getActivity()).get(UbicacionViewModel.class);
     }
 
     @Override
@@ -72,7 +78,6 @@ public class EditInventariableFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_inventariable, container, false);
         appCompatEditTextCod = view.findViewById(R.id.hintTextCod);
         appCompatEditTextTipo = view.findViewById(R.id.hintTextTipo);
-        appCompatEditTextUbi = view.findViewById(R.id.editTextUbi);
 
         tilCod = view.findViewById(R.id.textInputLayoutCod);
         tilTipo = view.findViewById(R.id.textInputLayoutTipo);
@@ -93,7 +98,6 @@ public class EditInventariableFragment extends Fragment {
         appCompatEditTextCod.setVisibility(View.GONE);
         appCompatEditTextTipo.setVisibility(View.GONE);
         btnSend.setVisibility(View.GONE);
-        appCompatEditTextUbi.setVisibility(View.GONE);
         ivFoto.setVisibility(View.GONE);
         btnCambiarImagen.setVisibility(View.GONE);
 
@@ -114,14 +118,10 @@ public class EditInventariableFragment extends Fragment {
                 appCompatEditTextTipo.setVisibility(View.VISIBLE);
                 btnSend.setVisibility(View.VISIBLE);
                 etNombre.setVisibility(View.VISIBLE);
-                appCompatEditTextUbi.setVisibility(View.VISIBLE);
                 appCompatEditTextCod.setText(equipo.getCodigo());
                 appCompatEditTextTipo.setText(equipo.getTipo());
-                appCompatEditTextUbi.setText(equipo.getUbicacion());
                 appCompatEditTextCod.setEnabled(false);
                 appCompatEditTextTipo.setEnabled(false);
-                appCompatEditTextUbi.setEnabled(false);
-
                 etNombre.setText(equipo.getNombre());
                 etDescription.setText(equipo.getDescripcion());
 
@@ -137,38 +137,37 @@ public class EditInventariableFragment extends Fragment {
                     }
                 });
 
-                /*ArrayAdapter listaUbicaciones = new ArrayAdapter(getActivity(), android.R.layout.simple_dropdown_item_1line,ds);
-                miSpinner.setAdapter(listaTemporadas);
-                miSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ubicacionViewModel.getListUbicaciones().observe(getActivity(), new Observer<List<String>>() {
+                            @Override
+                            public void onChanged(List<String> strings) {
+                                ArrayAdapter listaUbicaciones = new ArrayAdapter(getActivity(), android.R.layout.simple_dropdown_item_1line, strings);
+                                miSpinner.setAdapter(listaUbicaciones);
+                                miSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        final String ubi = miSpinner.getAdapter().getItem(position).toString();
+                                        btnSend.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Equipo equipoEditado = new Equipo(etNombre.getText().toString(),
+                                                        etDescription.getText().toString(),
+                                                        ubi);
+                                                equipoEditViewModel.updateEquipo(idUse,jwt,equipoEditado);
+                                                Intent i = new Intent(getActivity(), MainActivity.class);
+                                                startActivity(i);
+                                                getActivity().finish();
+                                            }
+                                        });
+                                    }
 
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
                             }
+                        });
 
-                        }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });*/
-
-
-
-
-                btnSend.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Equipo equipoEditado = new Equipo(etNombre.getText().toString(),
-                                etDescription.getText().toString(),
-                                appCompatEditTextUbi.getText().toString());
-
-                        equipoEditViewModel.updateEquipo(idUse,jwt,equipoEditado);
-                        Intent i = new Intent(getActivity(), MainActivity.class);
-                        startActivity(i);
-                        getActivity().finish();
-                    }
-                });
             }
         });
 

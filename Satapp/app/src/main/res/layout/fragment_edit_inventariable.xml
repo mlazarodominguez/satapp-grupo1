@@ -134,24 +134,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:hint="@string/hint_ubi"
                 android:textColorHint="@color/grey_40">
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/editTextUbi"
+                <Spinner
+                    android:id="@+id/miSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_ubi"
-                    android:inputType="text"
-                    android:textColor="@color/grey_95"
-                    android:theme="@style/EditText.Yellow" />
-
+                    android:layout_weight="1" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/miSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
 
             <View
                 android:id="@+id/view2"
