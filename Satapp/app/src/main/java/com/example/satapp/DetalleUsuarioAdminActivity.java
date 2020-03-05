@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -52,11 +53,12 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
     private UsuarioViewModel usuarioViewModel;
     public String id;
     public IUsuarioService service;
+    public EditText etEditarNombre;
+    public String fullname_txt;
     public ServiceGenerator serviceGenerator;
     public TextView tvnombre, tvEmail, tvCreatedAt, tvUpdateAt, tvRole;
     public ImageView ivFoto, ivEmail, ivRol;
-    public ProgressBar pbLoading;
-    public Button btnEditarFoto,btnPromocionar;
+    public Button btnEditarFoto,btnPromocionar,btnEditarPerfil,btnSalvarPerfil;
     Uri uriSelected;
     private static final int READ_REQUEST_CODE = 1234;
 
@@ -74,12 +76,36 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
         tvCreatedAt = findViewById(R.id.textViewCreatedAt);
         tvUpdateAt = findViewById(R.id.textViewUpdateAt);
         tvRole = findViewById(R.id.textViewRole);
-        pbLoading = findViewById(R.id.progressBarLoading);
         ivEmail = findViewById(R.id.imageViewEmail);
         ivRol = findViewById(R.id.imageViewRol);
+        etEditarNombre = findViewById(R.id.etEditNombre);
         btnEditarFoto = findViewById(R.id.btnEditarFoto);
         btnPromocionar = findViewById(R.id.btnPromocionar);
+        btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
+        btnSalvarPerfil = findViewById(R.id.btnSalvarEditPerfil);
         loadData();
+        btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etEditarNombre.setVisibility(View.VISIBLE);
+                btnSalvarPerfil.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        btnSalvarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fullname_txt = etEditarNombre.getText().toString();
+                RequestBody name = RequestBody.create(fullname_txt, MultipartBody.FORM);
+                usuarioViewModel.upgradeProfile(id,name).observe(DetalleUsuarioAdminActivity.this, new Observer<User>() {
+                    @Override
+                    public void onChanged(User user) {
+
+                    }
+                });
+            }
+        });
         btnEditarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,11 +125,11 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
                         usuarioViewModel.getUser(id).observe(DetalleUsuarioAdminActivity.this, new Observer<User>() {
                             @Override
                             public void onChanged(User user) {
-                                pbLoading.setVisibility(View.GONE);
+
                                 LocalDate createdAt = ConvertToDate(user.getCreatedAt());
                                 LocalDate updateAt = ConvertToDate(user.getUpdatedAt());
                                 DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
-                                if(user.getRole().equalsIgnoreCase("user")){
+                                if(user.getRole().equalsIgnoreCase("User")){
                                     btnPromocionar.setVisibility(View.VISIBLE);
                                 }
                                 tvnombre.setText(user.getName().toUpperCase());
@@ -154,7 +180,7 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
     }
 
     public void loadData() {
-        pbLoading.setVisibility(View.VISIBLE);
+
         ivFoto.setVisibility(View.GONE);
         tvnombre.setVisibility(View.GONE);
         tvEmail.setVisibility(View.GONE);
@@ -169,7 +195,7 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
         usuarioViewModel.getUser(id).observe(DetalleUsuarioAdminActivity.this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                pbLoading.setVisibility(View.GONE);
+
                 LocalDate createdAt = ConvertToDate(user.getCreatedAt());
                 LocalDate updateAt = ConvertToDate(user.getUpdatedAt());
                 DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");

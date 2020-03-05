@@ -60,6 +60,9 @@ public interface IUsuarioService {
 
     @GET("users/me")
     Call<User> profile(@Query("access_token")String token);
+    @Multipart
+    @PUT("users/{id}")
+    Call<User> updateProfile(@Path("id") String id,@Query("access_token")String token,@Part("name") RequestBody fullname);
 
 
     @PUT("users/{id}/tecnico")

@@ -6,16 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="476dp"
+        android:layout_height="184dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.692"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_logo_foreground"
+        tools:srcCompat="@mipmap/ic_logo_foreground" />
+
     <EditText
         android:id="@+id/etNombreRegister"
         android:layout_width="250dp"
         android:layout_height="44dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/hint_nombre"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/etEmailRegister"
-        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/etEmailRegister"
         app:layout_constraintTop_toBottomOf="@+id/etEmailRegister" />
 
@@ -23,12 +34,12 @@
         android:id="@+id/etEmailRegister"
         android:layout_width="252dp"
         android:layout_height="46dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="152dp"
         android:ems="10"
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,32 +60,37 @@
         android:id="@+id/etPasswordRepeat"
         android:layout_width="251dp"
         android:layout_height="44dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="88dp"
         android:ems="10"
         android:hint="@string/hint_password_repeat"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/etPasswordRegister"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/etPasswordRegister"
         app:layout_constraintTop_toBottomOf="@+id/etNombreRegister" />
 
     <Button
         android:id="@+id/btnSignUpRegister"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="SIGN UP"
+        android:layout_marginTop="16dp"
+        android:text="Registrarse"
+        android:textColor="#EC0E0E"
         app:layout_constraintEnd_toEndOf="@+id/btnAvatarRegister"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.553"
         app:layout_constraintStart_toStartOf="@+id/btnAvatarRegister"
         app:layout_constraintTop_toBottomOf="@+id/btnAvatarRegister" />
 
     <Button
         android:id="@+id/btnAvatarRegister"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="275dp"
         android:layout_height="47dp"
         android:layout_marginTop="36dp"
         android:text="Avatar"
+        android:textColor="#0C0C0C"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/etPasswordRepeat"
         app:layout_constraintStart_toStartOf="@+id/etPasswordRepeat"
         app:layout_constraintTop_toBottomOf="@+id/etPasswordRepeat" />

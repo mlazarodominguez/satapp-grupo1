@@ -23,7 +23,9 @@ import com.example.satapp.retrofit.ServiceGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +83,23 @@ public class UsuariosRepository {
             }
         });
     return data;
+    }
+
+    public MutableLiveData<User> updateUsuario(String id, RequestBody name){
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        Call<User> call = service.updateProfile(id, UtilToken.getToken(MyApp.getContext()),name);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                data.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+        return data;
     }
     public MutableLiveData<List<User>> getUsuariosNoValidados(){
         final MutableLiveData<List<User>> data = new MutableLiveData<>();

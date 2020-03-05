@@ -11,6 +11,8 @@ import com.example.satapp.repository.UsuariosRepository;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
+
 public class UsuarioViewModel extends AndroidViewModel {
 
 
@@ -55,6 +57,11 @@ public class UsuarioViewModel extends AndroidViewModel {
     public MutableLiveData<User> upgradeTecnico(String id){
         user = usuariosRepository.upgradeTecnico(id);
         return user;
+    }
+
+    public MutableLiveData<User> upgradeProfile(String id, RequestBody name){
+        user = usuariosRepository.updateUsuario(id, name);
+        return  user;
     }
 
     public void borrarUsuario(String id){

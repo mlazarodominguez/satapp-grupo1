@@ -75,11 +75,10 @@ public class perfil extends Fragment {
         tvCreatedAt = v.findViewById(R.id.textViewCreatedAt);
         tvUpdateAt = v.findViewById(R.id.textViewUpdateAt);
         tvRole = v.findViewById(R.id.textViewRole);
-        pbLoading = v.findViewById(R.id.progressBarLoading);
         ivEmail = v.findViewById(R.id.imageViewEmail);
         ivRol = v.findViewById(R.id.imageViewRol);
         btnEditar = v.findViewById(R.id.btnEditarFoto);
-        btnBorrar = v.findViewById(R.id.btnBorrarFoto);
+        btnBorrar = v.findViewById(R.id.btnEditarPerfil);
         loadData();
         return v;
     }

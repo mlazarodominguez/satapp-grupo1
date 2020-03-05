@@ -99,6 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                                 Toast.makeText(RegisterActivity.this, "Usuario Creado Correctamente", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(i);
+                                finish();
                             } else {
                                 Log.e("Upload error", response.errorBody().toString());
                             }
