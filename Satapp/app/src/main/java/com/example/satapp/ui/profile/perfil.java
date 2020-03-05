@@ -54,7 +54,7 @@ public class perfil extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_perfil, container, false);
         ivFoto = v.findViewById(R.id.imageViewFotoPerfil);
-        tvnombre = v.findViewById(R.id.textViewNombre);
+        tvnombre = v.findViewById(R.id.textInputNombre);
         tvEmail = v.findViewById(R.id.textViewEmail);
         tvCreatedAt = v.findViewById(R.id.textViewCreatedAt);
         tvUpdateAt = v.findViewById(R.id.textViewUpdateAt);

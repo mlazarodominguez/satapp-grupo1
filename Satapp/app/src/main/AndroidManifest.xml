@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.satapp">
 
+    <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -15,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TicketsEquipoActivity"></activity>
+        <activity android:name=".EditInventariableActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

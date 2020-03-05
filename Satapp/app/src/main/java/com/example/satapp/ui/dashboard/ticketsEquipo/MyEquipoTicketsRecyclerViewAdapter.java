@@ -3,19 +3,31 @@ package com.example.satapp.ui.dashboard.ticketsEquipo;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.satapp.R;
 import com.example.satapp.models.TicketsResponse;
+import com.example.satapp.models.UtilToken;
+import com.example.satapp.retrofit.IEquipoService;
+import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.TicketsEquipoViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyEquipoTicketsRecyclerViewAdapter.ViewHolder> {
 
@@ -33,6 +45,7 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_equipotickets, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -50,6 +63,34 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
             Glide.with(context).load("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png").into(holder.ivFoto);
         else
             Glide.with(context).load(holder.mItem.getFotos()).into(holder.ivFoto);
+
+        /*
+        IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
+
+        Call<ResponseBody> call = service.getImagenEquipo(holder.mItem.getId(), UtilToken.getToken(context));
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.i("imagen","" + response.body().byteStream());
+                Log.d("cuerpo", response.body().toString());
+                if (response.isSuccessful()) {
+                    Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
+
+                    if (holder.mItem.getFotos().isEmpty())
+                        Glide.with(context).load("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png").into(holder.ivFoto);
+                    else
+                        Glide.with(context).load(fotoBitMap).into(holder.ivFoto);
+                } else
+                    Toast.makeText(context, "Fallo", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error", t.getMessage());
+            }
+        });
+        */
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
