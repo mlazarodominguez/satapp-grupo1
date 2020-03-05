@@ -108,11 +108,8 @@ public class EquiposListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
         }
-
         adapter = new MyEquiposListRecyclerViewAdapter(equipoList,context,R.layout.fragment_equiposlist,equipoViewModel);
-
         recyclerView.setAdapter(adapter);
-
         return view;
     }
 

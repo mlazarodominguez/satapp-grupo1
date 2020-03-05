@@ -1,17 +1,20 @@
 package com.example.satapp.repository;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.satapp.common.MyApp;
 import com.example.satapp.models.Equipo;
-import com.example.satapp.models.User;
 import com.example.satapp.retrofit.IEquipoService;
 import com.example.satapp.retrofit.ServiceGenerator;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +61,7 @@ public class EquipoRepository {
             @Override
             public void onResponse(Call<Equipo> call, Response<Equipo> response) {
                 if(response.isSuccessful()){
-                    inventariableEdit.setValue(response.body());
+                    inventariableEdit.postValue(response.body());
                 }
             }
             @Override
@@ -86,6 +89,41 @@ public class EquipoRepository {
         });
     }
 
+    public void editInventariableImg(String id, String token, MultipartBody.Part imagen) {
+        final MutableLiveData<Equipo> inventariableEdit = new MutableLiveData<>();
+        Call<Equipo> inventariableCall = service.editImg(id,token,imagen);
+        inventariableCall.enqueue(new Callback<Equipo>() {
+            @Override
+            public void onResponse(Call<Equipo> call, Response<Equipo> response) {
+                if(response.isSuccessful()){
+                    inventariableEdit.setValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<Equipo> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    public MutableLiveData<Bitmap> getImagenEquipo(String id, String token) {
+        final MutableLiveData<Bitmap> imagenBitMap = new MutableLiveData<>();
+        Call<ResponseBody> imagenEquipo = service.getImagenEquipo(id, token);
+        imagenEquipo.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.isSuccessful()){
+                    Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
+                    imagenBitMap.setValue(fotoBitMap);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return imagenBitMap;
+    }
 
 }
