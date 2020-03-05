@@ -70,6 +70,27 @@ public class EquipoRepository {
         return data;
     }
 
+    public MutableLiveData<Equipo> deleteEquipo(String id,String token){
+        final MutableLiveData<Equipo> data = new MutableLiveData<>();
+        Call<Equipo> call = service.deleteEquipo(id,token);
+        call.enqueue(new Callback<Equipo>() {
+            @Override
+            public void onResponse(Call<Equipo> call, Response<Equipo> response) {
+                if(response.isSuccessful()){
+                    data.setValue(response.body());
+                }else{
+                    Toast.makeText(MyApp.getContext(), "Error on the response from the Api", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Equipo> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return data;
+    }
+
 
 
 }

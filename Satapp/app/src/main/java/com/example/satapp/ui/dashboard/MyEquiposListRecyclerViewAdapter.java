@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
     private int layout;
     private final EquipoViewModel equipoViewModel;
     UtilToken utilToken;
+    Button btnBorrarEquipo;
 
     public MyEquiposListRecyclerViewAdapter(List<Equipo> items, Context ctx, int layout, EquipoViewModel equipoViewModel) {
         mValues = items;
@@ -94,6 +96,15 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
 
             }
         });
+
+
+        btnBorrarEquipo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            equipoViewModel.deleteEquipo(holder.mItem.getId().toString(),utilToken.getToken(ctx));
+            }
+        });
+
     }
 
     public void setData(List<Equipo> equipoList){
@@ -120,6 +131,7 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             mView = view;
             imagenEquipo = (ImageView) view.findViewById(R.id.imageViewEquipo);
             titulo = (TextView) view.findViewById(R.id.textViewTituloEquipo);
+            btnBorrarEquipo = view.findViewById(R.id.buttonBorrarEquipo);
         }
 
         @Override
