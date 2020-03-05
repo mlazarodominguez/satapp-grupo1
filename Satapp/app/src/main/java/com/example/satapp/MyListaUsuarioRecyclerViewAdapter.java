@@ -63,6 +63,15 @@ public class MyListaUsuarioRecyclerViewAdapter extends RecyclerView.Adapter<MyLi
         holder.tvNombreLista.setText(holder.mItem.getEmail());
         holder.tvEmail.setText(holder.mItem.getName());
         holder.tvRol.setText(holder.mItem.getRole().toUpperCase());
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(null != usuarioViewModel){
+                    usuarioViewModel.setUsuarioId(holder.mItem.getId());
+                }
+            }
+        });
         if(holder.mItem.getPicture()!=null&& holder.mItem!=null){
             Call<ResponseBody> call = service.getAvatarUser(holder.mItem.getId(),UtilToken.getToken(context));
             call.enqueue(new Callback<ResponseBody>() {
@@ -89,6 +98,9 @@ public class MyListaUsuarioRecyclerViewAdapter extends RecyclerView.Adapter<MyLi
         }
 
 
+        }
+        if(holder.mItem.getRole().equalsIgnoreCase("Admin")){
+            holder.btnEliminarUsuario.setVisibility(View.INVISIBLE);
         }
         holder.btnEliminarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override

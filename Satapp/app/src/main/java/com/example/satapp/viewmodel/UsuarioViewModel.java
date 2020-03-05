@@ -17,12 +17,15 @@ public class UsuarioViewModel extends AndroidViewModel {
     MutableLiveData<List<User>> usuarios;
     UsuariosRepository usuariosRepository;
     MutableLiveData<User> user;
+    MutableLiveData<String> idSeleccionada;
     public MutableLiveData<String> token;
 
 
     public UsuarioViewModel(@NonNull Application application){
         super(application);
         usuariosRepository = new UsuariosRepository();
+        this.idSeleccionada = new MutableLiveData<>();
+        this.idSeleccionada.setValue(null);
 
        }
 
@@ -31,6 +34,10 @@ public class UsuarioViewModel extends AndroidViewModel {
         usuarios = usuariosRepository.getUsuariosValidados();
         return  usuarios;
        }
+
+    public void  setUsuariosValidados(List<User> usuarios){
+        this.usuarios.setValue(usuarios);
+    }
 
     public MutableLiveData<List<User>> getUsuariosNoValidados(){
         usuarios = usuariosRepository.getUsuariosNoValidados();
@@ -41,12 +48,26 @@ public class UsuarioViewModel extends AndroidViewModel {
         user = usuariosRepository.validarUsuario(id);
         return user;
     }
+    public MutableLiveData<User> getUser(String id){
+        user = usuariosRepository.getUser(id);
+        return user;
+    }
+    public MutableLiveData<User> upgradeTecnico(String id){
+        user = usuariosRepository.upgradeTecnico(id);
+        return user;
+    }
 
     public void borrarUsuario(String id){
         usuariosRepository.borrarUsuario(id);
     }
 
+    public void setUsuarioId(String usuarioId) {
+        this.idSeleccionada.setValue(usuarioId);
+    }
 
+    public MutableLiveData<String> getUsuarioId() {
+        return idSeleccionada;
+    }
 
 
 

@@ -38,6 +38,9 @@ public interface IUsuarioService {
                         @Part("email") RequestBody email,
                         @Part("name") RequestBody fullname,
                         @Part("password") RequestBody password,@Part MultipartBody.Part avatar);
+    @Multipart
+    @PUT("users/{id}/img")
+    Call<User> actualizarImagen(@Path("id")String id,@Query("access_token")String token,@Part MultipartBody.Part avatar);
 
 
     @GET("users/no-validated")
@@ -55,9 +58,13 @@ public interface IUsuarioService {
     @DELETE("users/{id}")
     Call<ResponseBody> borrarUsuario(@Path("id")String id,@Query("access_token")String token);
 
-
-
     @GET("users/me")
     Call<User> profile(@Query("access_token")String token);
+
+
+    @PUT("users/{id}/tecnico")
+    Call<User> upgradeTecnico(@Path("id")String id,@Query("access_token")String token);
+    @GET("users/{id}")
+    Call<User> perfilUsuario(@Path("id")String id,@Query("access_token")String token);
 }
 

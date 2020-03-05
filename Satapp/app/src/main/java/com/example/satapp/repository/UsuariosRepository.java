@@ -1,5 +1,9 @@
 package com.example.satapp.repository;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,9 +28,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 public class UsuariosRepository {
+
     IUsuarioService service;
     ServiceGenerator serviceGenerator;
+
 
     MutableLiveData<List<User>> usuarios;
     List<User> listaAux = new ArrayList<>();
@@ -58,6 +66,22 @@ public class UsuariosRepository {
         return data;
     }
 
+    public MutableLiveData<User> upgradeTecnico(String id) {
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        Call<User> call = service.upgradeTecnico(id, UtilToken.getToken(MyApp.getContext()));
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                data.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+    return data;
+    }
     public MutableLiveData<List<User>> getUsuariosNoValidados(){
         final MutableLiveData<List<User>> data = new MutableLiveData<>();
 
@@ -67,7 +91,9 @@ public class UsuariosRepository {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful()) {
                     data.setValue(response.body());
-                } else {
+                } else if(response.code()==404) {
+                    Toast.makeText(MyApp.getContext(), "No hay usuarios pendientes de validación", Toast.LENGTH_SHORT).show();
+                }else{
                     Toast.makeText(MyApp.getContext(), "Error on the response from the Api", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -115,6 +141,24 @@ public class UsuariosRepository {
     }
 
 
+    public MutableLiveData<User> getUser(String id) {
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        Call<User> userCallMe = service.perfilUsuario(id,UtilToken.getToken(MyApp.getContext()));
+        userCallMe.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    data.postValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return data;
+    }
+
 
     public MutableLiveData<User>getCurrentUser(String token) {
         final MutableLiveData<User> userProfile = new MutableLiveData<>();
@@ -133,5 +177,6 @@ public class UsuariosRepository {
         });
         return userProfile;
     }
+
 
 }
