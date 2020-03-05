@@ -1,5 +1,6 @@
 package com.example.satapp.repository;
 
+import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -22,11 +23,13 @@ public class UbicacionRepository {
 
     MutableLiveData<List<String>> ubicacionesList;
     MutableLiveData<List<TicketsResponse>> ticketsEquipoList;
+    Intent intent;
 
     public UbicacionRepository() {
         service = serviceGenerator.createService(IUbicacionService.class);
         ubicacionesList = null;
         ticketsEquipoList = null;
+        //intent = Intent.getIntent();
     }
 
     public MutableLiveData<List<String>> getUbicacionesList() {
@@ -56,7 +59,7 @@ public class UbicacionRepository {
     public MutableLiveData<List<TicketsResponse>> getTicketsEquipoList(String id) {
         final MutableLiveData<List<TicketsResponse>> data = new MutableLiveData<>();
 
-        Call<List<TicketsResponse>> call = service.getListTicketsEquipo(UtilToken.getToken(MyApp.getContext()), id);
+        Call<List<TicketsResponse>> call = service.getListTicketsEquipo(id, UtilToken.getToken(MyApp.getContext()));
         call.enqueue(new Callback<List<TicketsResponse>>() {
             @Override
             public void onResponse(Call<List<TicketsResponse>> call, Response<List<TicketsResponse>> response) {

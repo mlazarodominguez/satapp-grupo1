@@ -15,5 +15,5 @@ public interface IUbicacionService {
     Call<List<String>> getUbicaciones(@Query("access_token") String access_token);
 
     @GET("/ticket/inventariable/{id}")
-    Call<List<TicketsResponse>> getListTicketsEquipo(@Query("access_token") String access_token, @Path("id") String id);
+    Call<List<TicketsResponse>> getListTicketsEquipo(@Path("id") String id, @Query("access_token") String access_token);
 }
