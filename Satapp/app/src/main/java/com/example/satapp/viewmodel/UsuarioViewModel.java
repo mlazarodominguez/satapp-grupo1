@@ -13,9 +13,11 @@ import java.util.List;
 
 public class UsuarioViewModel extends AndroidViewModel {
 
+
     MutableLiveData<List<User>> usuarios;
     UsuariosRepository usuariosRepository;
     MutableLiveData<User> user;
+    public MutableLiveData<String> token;
 
 
     public UsuarioViewModel(@NonNull Application application){
@@ -43,4 +45,19 @@ public class UsuarioViewModel extends AndroidViewModel {
     public void borrarUsuario(String id){
         usuariosRepository.borrarUsuario(id);
     }
+
+
+
+
+
+    //Set Token
+    public void setToken(String tokenA) {
+        this.token.setValue(tokenA);
+    }
+
+    //Get Token
+    public MutableLiveData<String> getToken() {
+        return token;
+    }
 }
+
