@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.satapp.EditInventariableActivity;
 import com.example.satapp.R;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
@@ -90,6 +92,15 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
 
         });
 
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (equipoViewModel != null) {
+                    equipoViewModel.setEquipo(holder.mItem.getId());
+                }
+            }
+        });
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +136,7 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         public final ImageView imagenEquipo;
         public final TextView titulo;
         public Equipo mItem;
+        public Button btnEdit;
 
         public ViewHolder(View view) {
             super(view);
@@ -132,6 +144,8 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             imagenEquipo = (ImageView) view.findViewById(R.id.imageViewEquipo);
             titulo = (TextView) view.findViewById(R.id.textViewTituloEquipo);
             btnBorrarEquipo = view.findViewById(R.id.buttonBorrarEquipo);
+            btnEdit = view.findViewById(R.id.buttonEditMomentaneo);
+
         }
 
         @Override

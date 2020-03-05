@@ -70,5 +70,4 @@ public class UsuariosRepository {
         return userProfile;
     }
 
-
 }

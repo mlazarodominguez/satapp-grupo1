@@ -7,11 +7,22 @@
     android:orientation="horizontal">
 
 
+    <Button
+        android:id="@+id/buttonBorrarEquipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Borrar"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewEquipo"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ImageView
         android:id="@+id/imageViewEquipo"
         android:layout_width="300px"
         android:layout_height="300px"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,12 +38,13 @@
         app:layout_constraintTop_toTopOf="@+id/imageViewEquipo" />
 
     <Button
-        android:id="@+id/buttonBorrarEquipo"
+        android:id="@+id/buttonEditMomentaneo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:text="Borrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewTituloEquipo" />
+        android:layout_marginBottom="3dp"
+        android:text="Editar"
+        app:layout_constraintBottom_toTopOf="@+id/buttonBorrarEquipo"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBorrarEquipo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
