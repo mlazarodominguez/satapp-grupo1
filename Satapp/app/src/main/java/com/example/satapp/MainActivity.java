@@ -2,6 +2,7 @@ package com.example.satapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.SearchView;
 
 import com.example.satapp.common.Constantes;
 import com.example.satapp.viewmodel.EquipoViewModel;
@@ -15,7 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     EquipoViewModel equipoViewModel;
 
