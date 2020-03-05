@@ -54,5 +54,10 @@ public interface IEquipoService {
     Call<Equipo> editInventariable(@Path("id") String id,
                                    @Query("access_token")String token,
                                    @Body Equipo equipo);
+    @Multipart
+    @PUT("inventariable/{id}/img")
+    Call<Equipo> editImg(@Path("id")String id,
+                         @Query("access_token") String token,
+                         @Part MultipartBody.Part imagen);
 
 }

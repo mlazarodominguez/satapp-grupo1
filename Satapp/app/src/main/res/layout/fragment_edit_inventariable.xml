@@ -20,6 +20,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageViewFotoEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <Button
+                    android:id="@+id/buttonEditarFotoEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/common_google_signin_btn_text_dark_focused"
+                    android:text="@string/text_edit_photo"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_middle"
+                android:layout_weight="1" />
+
             <EditText
                 android:id="@+id/editTextNombre"
                 android:layout_width="match_parent"
@@ -103,21 +133,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:hint="@string/hint_ubi"
                 android:textColorHint="@color/grey_40">
 
-                <EditText
-                    android:id="@+id/editTextUbi"
+                <Spinner
+                    android:id="@+id/miSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_ubi"
-                    android:inputType="text"
-                    android:textColor="@color/grey_95"
-                    android:theme="@style/EditText.Yellow" />
-
+                    android:layout_weight="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <View
                 android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_middle"
+                android:layout_weight="1" />
+
+            <View
+                android:id="@+id/view3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_middle"
                 android:layout_weight="1" />

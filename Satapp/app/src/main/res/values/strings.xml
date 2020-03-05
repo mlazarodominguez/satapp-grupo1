@@ -28,4 +28,5 @@
     <string name="hint_type">Tipo</string>
     <string name="hint_cod">Código</string>
     <string name="hint_ubi">Ubicación</string>
+    <string name="text_edit_photo">Cambiar foto</string>
 </resources>
