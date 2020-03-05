@@ -2,11 +2,18 @@ package com.example.satapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.satapp.common.Constantes;
 import com.example.satapp.viewmodel.EquipoViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-
         equipoViewModel = new ViewModelProvider(this)
                 .get(EquipoViewModel.class);
 
@@ -49,6 +55,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new IntentIntegrator(MainActivity.this).initiateScan();
+            }
+        });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        if(result != null){
+            Toast.makeText(MainActivity.this,"El códgio es "+ result.getContents(),Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(MainActivity.this,"Error",Toast.LENGTH_LONG).show();
+        }
+    }
 }

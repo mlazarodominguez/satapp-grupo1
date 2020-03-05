@@ -30,7 +30,7 @@
         app:layout_constraintRight_toRightOf="@id/nav_view"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
-<!--
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
@@ -40,6 +40,6 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@id/nav_host_fragment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
--->
+        app:srcCompat="@drawable/ic_qr" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
