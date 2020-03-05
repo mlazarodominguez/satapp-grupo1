@@ -41,8 +41,9 @@ public class Equipo {
         private String imagen;
 
 
-        public Equipo(String nombre, String descripcion) {
+        public Equipo(String nombre, String descripcion, String ubicacion) {
                 this.nombre = nombre;
                 this.descripcion = descripcion;
+                this.ubicacion = ubicacion;
         }
 }

@@ -2,6 +2,8 @@ package com.example.satapp.ui.dashboard;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -13,11 +15,16 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.satapp.MainActivity;
 import com.example.satapp.R;
 import com.example.satapp.common.Constantes;
@@ -25,18 +32,29 @@ import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.viewmodel.EquipoEditViewModel;
 import com.example.satapp.viewmodel.EquipoViewModel;
+import com.example.satapp.viewmodel.UbicacionViewModel;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
+
+import okhttp3.ResponseBody;
 
 public class EditInventariableFragment extends Fragment {
 
     public TextInputLayout tilCod, tilTipo, tilUbi, tilNombre, tilDescription;
     public EquipoEditViewModel equipoEditViewModel;
+    public EquipoViewModel equipoViewModel;
+    public UbicacionViewModel ubicacionViewModel;
     public Bundle bundle;
     public String jwt, idUse;
     public ProgressBar progressBar;
     public Button btnSend;
     public AppCompatEditText appCompatEditTextCod, appCompatEditTextTipo;
     public EditText etNombre, etDescription, etUbi;
+    public Spinner miSpinner;
+    public ImageView ivFoto;
+    public Button btnCambiarImagen;
+    public String ubiacion;
 
     public EditInventariableFragment() {
         // Required empty public constructor
@@ -46,8 +64,12 @@ public class EditInventariableFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bundle = getActivity().getIntent().getExtras();
+        jwt = UtilToken.getToken(getContext());
+        idUse = bundle.getString(Constantes.EXTRA_ID_INVENTARIABLE);
+        equipoViewModel = new ViewModelProvider(getActivity()).get(EquipoViewModel.class);
         equipoEditViewModel = new ViewModelProvider(getActivity()).get(EquipoEditViewModel.class);
-
+        ubicacionViewModel = new ViewModelProvider(getActivity()).get(UbicacionViewModel.class);
     }
 
     @Override
@@ -61,11 +83,14 @@ public class EditInventariableFragment extends Fragment {
         tilTipo = view.findViewById(R.id.textInputLayoutTipo);
         tilUbi = view.findViewById(R.id.textInputLayoutUbi);
 
+        btnCambiarImagen = view.findViewById(R.id.buttonEditarFotoEquipo);
+        miSpinner = view.findViewById(R.id.miSpinner);
+        ivFoto = view.findViewById(R.id.imageViewFotoEquipo);
+
         progressBar = view.findViewById(R.id.progressBarLoadEditEquipo);
         btnSend = view.findViewById(R.id.buttonSendEditEquipo);
         etNombre = view.findViewById(R.id.editTextNombre);
         etDescription = view.findViewById(R.id.editTextDescription);
-        etUbi = view.findViewById(R.id.editTextUbi);
 
         progressBar.setVisibility(View.VISIBLE);
         etNombre.setVisibility(View.GONE);
@@ -73,17 +98,16 @@ public class EditInventariableFragment extends Fragment {
         appCompatEditTextCod.setVisibility(View.GONE);
         appCompatEditTextTipo.setVisibility(View.GONE);
         btnSend.setVisibility(View.GONE);
-        etUbi.setVisibility(View.GONE);
+        ivFoto.setVisibility(View.GONE);
+        btnCambiarImagen.setVisibility(View.GONE);
 
-        bundle = getActivity().getIntent().getExtras();
-        jwt = UtilToken.getToken(getContext());
-        idUse = bundle.getString(Constantes.EXTRA_ID_INVENTARIABLE);
         loadData();
 
         return view;
     }
 
     public void loadData(){
+
         equipoEditViewModel.getEquipo(idUse,jwt).observe(getActivity(),new Observer<Equipo>() {
             @Override
             public void onChanged(final Equipo equipo) {
@@ -94,28 +118,56 @@ public class EditInventariableFragment extends Fragment {
                 appCompatEditTextTipo.setVisibility(View.VISIBLE);
                 btnSend.setVisibility(View.VISIBLE);
                 etNombre.setVisibility(View.VISIBLE);
-                etUbi.setVisibility(View.VISIBLE);
-
-                etUbi.setText(equipo.getUbicacion());
                 appCompatEditTextCod.setText(equipo.getCodigo());
                 appCompatEditTextTipo.setText(equipo.getTipo());
                 appCompatEditTextCod.setEnabled(false);
                 appCompatEditTextTipo.setEnabled(false);
-                etUbi.setEnabled(false);
-
                 etNombre.setText(equipo.getNombre());
                 etDescription.setText(equipo.getDescripcion());
 
-                btnSend.setOnClickListener(new View.OnClickListener() {
+                equipoViewModel.getImagenEquipo(idUse,jwt).observe(getActivity(), new Observer<Bitmap>() {
                     @Override
-                    public void onClick(View v) {
-                        Equipo equipoo = new Equipo(etNombre.getText().toString(),etDescription.getText().toString());
-                        equipoEditViewModel.updateEquipo(idUse,jwt,equipoo);
-                        Intent i = new Intent(getActivity(), MainActivity.class);
-                        startActivity(i);
-                        getActivity().finish();
+                    public void onChanged(Bitmap bitmap) {
+                        Glide.with(getActivity())
+                                .load(bitmap)
+                                .centerCrop()
+                                .into(ivFoto);
+                        ivFoto.setVisibility(View.VISIBLE);
+                        btnCambiarImagen.setVisibility(View.VISIBLE);
                     }
                 });
+
+                ubicacionViewModel.getListUbicaciones().observe(getActivity(), new Observer<List<String>>() {
+                            @Override
+                            public void onChanged(List<String> strings) {
+                                ArrayAdapter listaUbicaciones = new ArrayAdapter(getActivity(), android.R.layout.simple_dropdown_item_1line, strings);
+                                miSpinner.setAdapter(listaUbicaciones);
+                                miSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        final String ubi = miSpinner.getAdapter().getItem(position).toString();
+                                        btnSend.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Equipo equipoEditado = new Equipo(etNombre.getText().toString(),
+                                                        etDescription.getText().toString(),
+                                                        ubi);
+                                                equipoEditViewModel.updateEquipo(idUse,jwt,equipoEditado);
+                                                Intent i = new Intent(getActivity(), MainActivity.class);
+                                                startActivity(i);
+                                                getActivity().finish();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            }
+                        });
+
             }
         });
 

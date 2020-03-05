@@ -114,11 +114,9 @@ public class EquiposListFragment extends Fragment implements SearchView.OnQueryT
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
         }
-
+        loadEquipoData();
         adapter = new MyEquiposListRecyclerViewAdapter(equipoList,context,R.layout.fragment_equiposlist,equipoViewModel);
-
         recyclerView.setAdapter(adapter);
-
         return view;
     }
 
@@ -158,18 +156,26 @@ public class EquiposListFragment extends Fragment implements SearchView.OnQueryT
 
 
         if(userInput.equals("")) {
-            loadEquipoData();
-            newList.addAll(equipoList);
-
+            onResume();
+            if(equipoList==null){
+                loadEquipoData();
+            }else {
+                newList.addAll(equipoList);
+            }
         } else {
-            for(Equipo e : equipoList){
-                if(e.getNombre().toLowerCase().contains(userInput)){
-                    newList.add(e);
+            if(equipoList==null){
+                onResume();
+            }else {
+                for (Equipo e : equipoList) {
+                    if (e.getNombre().toLowerCase().contains(userInput)) {
+                        newList.add(e);
+                    }
                 }
             }
-            adapter.updateList(newList);
 
         }
+
+        adapter.updateList(newList);
 
 
         return false;

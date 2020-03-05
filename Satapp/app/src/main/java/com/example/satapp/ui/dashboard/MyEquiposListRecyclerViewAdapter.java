@@ -1,6 +1,7 @@
 package com.example.satapp.ui.dashboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.satapp.R;
+import com.example.satapp.TicketsEquipoActivity;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IEquipoService;
@@ -28,7 +30,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEquiposListRecyclerViewAdapter.ViewHolder> {
 
@@ -64,14 +65,12 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
 
         IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
 
-
         Call<ResponseBody> imagenEquipo = service.getImagenEquipo(holder.mItem.getId(),(utilToken.getToken(ctx)));
 
         imagenEquipo.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.i("imagen","" + response.body().byteStream());
                 Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
 
 
@@ -102,7 +101,9 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ctx, TicketsEquipoActivity.class);
+                intent.putExtra("idEquipo", holder.mItem.getId());
+                ctx.startActivity(intent);
             }
         });
 
