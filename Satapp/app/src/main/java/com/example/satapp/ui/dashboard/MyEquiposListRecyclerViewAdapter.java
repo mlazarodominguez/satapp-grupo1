@@ -63,6 +63,8 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.mItem = mValues.get(position);
 
         holder.titulo.setText(holder.mItem.getNombre());
+        holder.tipo.setText(holder.mItem.getTipo());
+        holder.ubicacion.setText(holder.mItem.getUbicacion());
 
         IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
 
@@ -135,6 +137,8 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         public final View mView;
         public final ImageView imagenEquipo;
         public final TextView titulo;
+        public final TextView tipo;
+        public final TextView ubicacion;
         public Equipo mItem;
         public Button btnEdit;
 
@@ -143,8 +147,11 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             mView = view;
             imagenEquipo = (ImageView) view.findViewById(R.id.imageViewEquipo);
             titulo = (TextView) view.findViewById(R.id.textViewTituloEquipo);
+            tipo= view.findViewById(R.id.textViewTipoEquipo);
+            ubicacion = view.findViewById(R.id.textViewUbicacionEquipo);
             btnBorrarEquipo = view.findViewById(R.id.buttonBorrarEquipo);
             btnEdit = view.findViewById(R.id.buttonEditMomentaneo);
+
 
         }
 
