@@ -3,8 +3,6 @@ package com.example.satapp.ui.dashboard;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,26 +10,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.satapp.EquipoDetailActivity;
 import com.example.satapp.R;
-import com.example.satapp.TicketsEquipoActivity;
 import com.example.satapp.common.Constantes;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
-import com.example.satapp.retrofit.IEquipoService;
-import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.EquipoViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEquiposListRecyclerViewAdapter.ViewHolder> {
 
@@ -65,30 +57,14 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.tipo.setText(holder.mItem.getTipo());
         holder.ubicacion.setText(holder.mItem.getUbicacion());
 
-        IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
-
-        Call<ResponseBody> imagenEquipo = service.getImagenEquipo(holder.mItem.getId(),(utilToken.getToken(ctx)));
-
-        imagenEquipo.enqueue(new Callback<ResponseBody>() {
+        equipoViewModel.getImagenEquipo(holder.mItem.getId(),(utilToken.getToken(ctx))).observe((LifecycleOwner) ctx, new Observer<Bitmap>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
-
-
+            public void onChanged(Bitmap bitmap) {
                 Glide.with(ctx)
-                        .load(fotoBitMap)
+                        .load(bitmap)
                         .centerCrop()
                         .into(holder.imagenEquipo);
-
             }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload error", t.getMessage());
-
-            }
-
         });
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {

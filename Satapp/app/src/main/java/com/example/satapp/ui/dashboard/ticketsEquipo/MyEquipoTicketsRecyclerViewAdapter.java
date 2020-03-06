@@ -1,20 +1,25 @@
 package com.example.satapp.ui.dashboard.ticketsEquipo;
 
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.satapp.EquipoDetailActivity;
 import com.example.satapp.R;
 import com.example.satapp.TicketDetailActivity;
 import com.example.satapp.models.TicketsResponse;
@@ -23,9 +28,18 @@ import com.example.satapp.retrofit.IEquipoService;
 import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.TicketsEquipoViewModel;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +48,7 @@ import retrofit2.Response;
 public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyEquipoTicketsRecyclerViewAdapter.ViewHolder> {
 
     private List<TicketsResponse> mValues;
+    TicketsResponse ticket;
     TicketsEquipoViewModel ticketsEquipoViewModel;
     Context context;
 
@@ -60,6 +75,7 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         holder.tvEstado.setText("Estado: " + holder.mItem.getEstado());
         holder.tvFechaCreacion.setText("Creado: " + holder.mItem.getFechaCreacion());
         holder.tvDescripcion.setText("Descripción: " + holder.mItem.getDescripcion());
+        ticket = holder.mItem;
 
         if (holder.mItem.getFotos().isEmpty())
             Glide.with(context).load("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png").into(holder.ivFoto);
@@ -101,6 +117,7 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         public final TextView tvDescripcion;
         public TicketsResponse mItem;
 
+
         public ViewHolder(View view) {
             super(view);
             mView = view;
@@ -113,4 +130,7 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         }
 
     }
+
+    
+
 }
