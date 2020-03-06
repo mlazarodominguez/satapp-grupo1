@@ -16,10 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.satapp.AddTicketActivity;
 import com.example.satapp.R;
-import com.example.satapp.common.Constantes;
 import com.example.satapp.models.TicketsResponse;
+import com.example.satapp.viewmodel.EquipoViewModel;
 import com.example.satapp.viewmodel.TicketsEquipoViewModel;
 
 import java.util.ArrayList;
@@ -32,37 +31,19 @@ public class EquipoTicketsFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private TicketsEquipoViewModel ticketsEquipoViewModel;
+    EquipoViewModel equipoViewModel;
     MyEquipoTicketsRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     private List<TicketsResponse> ticketsList;
-    Bundle extras;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public EquipoTicketsFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static EquipoTicketsFragment newInstance(int columnCount) {
-        EquipoTicketsFragment fragment = new EquipoTicketsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-        extras = getActivity().getIntent().getExtras();
         ticketsEquipoViewModel = new ViewModelProvider(getActivity()).get(TicketsEquipoViewModel.class);
+        equipoViewModel = new ViewModelProvider(getActivity()).get(EquipoViewModel.class);
     }
 
     @Override
@@ -70,7 +51,6 @@ public class EquipoTicketsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_equipotickets_list, container, false);
 
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
@@ -85,26 +65,27 @@ public class EquipoTicketsFragment extends Fragment {
                     getActivity(), ticketsList, ticketsEquipoViewModel
             );
             recyclerView.setAdapter(adapter);
-
             loadTicketsTarea();
         }
         return view;
     }
 
     private void loadTicketsTarea() {
-        if (ticketsEquipoViewModel.getListTicketsEquipo(extras.getString(Constantes.EXTRA_ID_INVENTARIABLE)) == null)
-            Toast.makeText(getActivity(), "No hay tickets creados para este equipo", Toast.LENGTH_SHORT).show();
-        else {
-            ticketsEquipoViewModel.getListTicketsEquipo(extras.getString(Constantes.EXTRA_ID_INVENTARIABLE)).observe(getActivity(), new Observer<List<TicketsResponse>>() {
+            equipoViewModel.getIdEquipo().observe(getActivity(), new Observer<String>() {
                 @Override
-                public void onChanged(List<TicketsResponse> ticketsResponses) {
-                    ticketsList = ticketsResponses;
-                    Intent intent = new Intent(getActivity(), AddTicketActivity.class);
-                    intent.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, extras.getString(Constantes.EXTRA_ID_INVENTARIABLE));
-                    adapter.setData(ticketsList);
+                public void onChanged(String s) {
+                    if (ticketsEquipoViewModel.getListTicketsEquipo(s) == null)
+                        Toast.makeText(getActivity(), "No hay tickets creados para este equipo", Toast.LENGTH_SHORT).show();
+                    else {
+                        ticketsEquipoViewModel.getListTicketsEquipo(s).observe(getActivity(), new Observer<List<TicketsResponse>>() {
+                            @Override
+                            public void onChanged(List<TicketsResponse> ticketsResponses) {
+                                ticketsList = ticketsResponses;
+                                adapter.setData(ticketsList);
+                            }
+                        });
+                    }
                 }
             });
         }
     }
-
-}

@@ -9,13 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.satapp.EditInventariableActivity;
 import com.example.satapp.EquipoDetailActivity;
+import com.example.satapp.MainActivity;
 import com.example.satapp.R;
 import com.example.satapp.TicketsEquipoActivity;
 import com.example.satapp.common.Constantes;
@@ -40,7 +45,7 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
     private int layout;
     private final EquipoViewModel equipoViewModel;
     UtilToken utilToken;
-    Button btnBorrarEquipo;
+    Intent intentDetail;
 
 
     public MyEquiposListRecyclerViewAdapter(List<Equipo> items, Context ctx, int layout, EquipoViewModel equipoViewModel) {
@@ -96,6 +101,9 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             public void onClick(View v) {
                 if (equipoViewModel != null) {
                     equipoViewModel.setEquipo(holder.mItem.getId());
+                    Intent editIntent =  new Intent(ctx, EditInventariableActivity.class);
+                    editIntent.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, holder.mItem.getId());
+                    ctx.startActivity(editIntent);
                 }
             }
         });
@@ -105,15 +113,19 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             public void onClick(View v) {
                 if (equipoViewModel != null) {
                     equipoViewModel.setEquipo(holder.mItem.getId());
+                    intentDetail =  new Intent(ctx, EquipoDetailActivity.class);
+                    equipoViewModel.getIdEquipo().observe((LifecycleOwner) ctx, new Observer<String>() {
+                        @Override
+                        public void onChanged(String s) {
+                            intentDetail.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, s);
+                            ctx.startActivity(intentDetail);
+                        }
+                    });
                 }
-                Intent i = new Intent(ctx, EquipoDetailActivity.class);
-                i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, holder.mItem.getId());
-                ctx.startActivity(i);
             }
         });
 
-
-        btnBorrarEquipo.setOnClickListener(new View.OnClickListener() {
+        holder.btnBorrarEquipo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             equipoViewModel.deleteEquipo(holder.mItem.getId().toString(),utilToken.getToken(ctx));
@@ -157,7 +169,9 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         public final TextView tipo;
         public final TextView ubicacion;
         public Equipo mItem;
-        public Button btnEdit;
+        public ImageButton btnEdit;
+        public ImageButton btnBorrarEquipo;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -168,7 +182,6 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             ubicacion = view.findViewById(R.id.textViewUbicacionEquipo);
             btnBorrarEquipo = view.findViewById(R.id.buttonBorrarEquipo);
             btnEdit = view.findViewById(R.id.buttonEditMomentaneo);
-
 
         }
 

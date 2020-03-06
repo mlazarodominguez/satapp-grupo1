@@ -47,11 +47,6 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-
-
-    //glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     //cardView
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.airbnb.android:lottie:3.3.1'

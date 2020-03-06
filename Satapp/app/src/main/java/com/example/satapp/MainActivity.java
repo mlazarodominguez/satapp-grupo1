@@ -1,34 +1,20 @@
 package com.example.satapp;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-import android.widget.SearchView;
 
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
-import android.widget.SearchView;
-
 
 import com.example.satapp.common.Constantes;
-import com.example.satapp.common.MyApp;
-import com.example.satapp.models.User;
-import com.example.satapp.retrofit.IUsuarioService;
-import com.example.satapp.retrofit.ServiceGenerator;
+import com.example.satapp.viewmodel.EquipoEditViewModel;
 import com.example.satapp.viewmodel.EquipoViewModel;
 import com.example.satapp.viewmodel.UsuarioViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -37,16 +23,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.List;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
 public class MainActivity extends AppCompatActivity {
-
 
     EquipoViewModel equipoViewModel;
     UsuarioViewModel usuarioViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,59 +48,36 @@ public class MainActivity extends AppCompatActivity {
         usuarioViewModel = new ViewModelProvider(this)
                 .get(UsuarioViewModel.class);
 
-        equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
+        equipoViewModel.getIdEquipo().observe(MainActivity.this, new Observer<String>() {
             @Override
-            public void onChanged(String equipoId) {
+            public void onChanged(final String equipoId) {
                 if (equipoId != null) {
-                    Intent i = new Intent(MainActivity.this, EditInventariableActivity.class);
-                    i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
-                    startActivity(i);
-                }
-            }
-        });
-
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new IntentIntegrator(MainActivity.this).initiateScan();
-                equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
-                    @Override
-                    public void onChanged(String equipoId) {
-                        if (equipoId != null) {
+                    FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new IntentIntegrator(MainActivity.this).initiateScan();
                             Intent i = new Intent(MainActivity.this, TicketsEquipoActivity.class);
                             i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
                             startActivity(i);
                         }
-                    }
-                });
+                    });
 
-                usuarioViewModel.getUsuarioId().observe(MainActivity.this, new Observer<String>() {
-                    @Override
-                    public void onChanged(String s) {
-                        if (s != null) {
-                            Intent i = new Intent(MainActivity.this, DetalleUsuarioAdminActivity.class);
-                            i.putExtra("idUser", s);
-
-                            equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
-                                @Override
-                                public void onChanged(String equipoId) {
-                                    if (equipoId != null) {
-                                        Intent i = new Intent(MainActivity.this, TicketsEquipoActivity.class);
-                                        i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
-                                        startActivity(i);
-                                    }
-                                }
-                            });
-
-
-                        }
-
-
-                    }
-                });
+                }
             }
         });
+
+        usuarioViewModel.getUsuarioId().observe(MainActivity.this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    Intent i = new Intent(MainActivity.this, DetalleUsuarioAdminActivity.class);
+                    i.putExtra("idUser", s);
+
+                }
+            }
+        });
+
     }
 
     @Override
@@ -139,4 +96,8 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-}
+
+
+
+    }
+

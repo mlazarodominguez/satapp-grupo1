@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.satapp.common.Constantes;
@@ -29,24 +30,30 @@ import retrofit2.Response;
 
 public class EquipoDetailActivity extends AppCompatActivity {
 
-    EquipoEditViewModel equipoViewModel;
+    EquipoViewModel equipoViewModel;
     TextView tvUbicacion, tvTipo, tvTitulo, tvTickets;
     ImageView ivFoto;
-    Bundle extras;
+    Bundle bundle;
+    String id, jwt;
+    EquipoEditViewModel equipoEditViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipo_detail);
 
+        bundle = getIntent().getExtras();
+        id = bundle.getString(Constantes.EXTRA_ID_INVENTARIABLE);
+
+        jwt = UtilToken.getToken(this);
         retrofitInit();
         findViews();
         events();
     }
 
     private void retrofitInit() {
-        equipoViewModel = new ViewModelProvider(this).get(EquipoEditViewModel.class);
-        extras = getIntent().getExtras();
+        equipoViewModel = new ViewModelProvider(this).get(EquipoViewModel.class);
+        equipoEditViewModel = new ViewModelProvider(this).get(EquipoEditViewModel.class);
     }
 
     private void findViews() {
@@ -58,33 +65,23 @@ public class EquipoDetailActivity extends AppCompatActivity {
     }
 
     private void events() {
-        equipoViewModel.getEquipo(extras.getString(Constantes.EXTRA_ID_INVENTARIABLE), UtilToken.getToken(this)).observe(this, new Observer<Equipo>() {
+
+        equipoEditViewModel.getEquipo(id, jwt).observe(this, new Observer<Equipo>() {
             @Override
             public void onChanged(final Equipo equipo) {
                 tvUbicacion.setText(equipo.getUbicacion());
                 tvTipo.setText(equipo.getTipo());
                 tvTitulo.setText(equipo.getNombre());
 
-                IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
-
-                Call<ResponseBody> imagenEquipo = service.getImagenEquipo(equipo.getId(),UtilToken.getToken(EquipoDetailActivity.this));
-
-                imagenEquipo.enqueue(new Callback<ResponseBody>() {
+                equipoViewModel.getImagenEquipo(id, jwt).observe(EquipoDetailActivity.this, new Observer<Bitmap>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
+                    public void onChanged(Bitmap bitmap) {
 
                         Glide.with(EquipoDetailActivity.this)
-                                .load(fotoBitMap)
+                                .load(bitmap)
                                 .centerCrop()
                                 .into(ivFoto);
                     }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("Upload error", t.getMessage());
-                    }
-
                 });
 
                 tvTickets.setText("Ver Tickets");
@@ -93,7 +90,7 @@ public class EquipoDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(EquipoDetailActivity.this, TicketsEquipoActivity.class);
-                        i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipo.getId());
+                        i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, id);
                         startActivity(i);
                     }
                 });
