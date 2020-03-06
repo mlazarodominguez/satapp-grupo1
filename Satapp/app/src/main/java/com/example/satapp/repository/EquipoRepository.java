@@ -96,7 +96,7 @@ public class EquipoRepository {
     }
 
 
-    public MutableLiveData<Equipo>getInventariable(String id, String token) {
+    public MutableLiveData<Equipo> getInventariable(String id, String token) {
         final MutableLiveData<Equipo> inventariableEdit = new MutableLiveData<>();
         Call<Equipo> editInventariableCall = service.getEquipoDetalles(id,token);
         editInventariableCall.enqueue(new Callback<Equipo>() {
