@@ -55,6 +55,11 @@ public class UsuarioViewModel extends AndroidViewModel {
         user = usuariosRepository.getUser(id);
         return user;
     }
+
+    public MutableLiveData<User> getCurrentUser(String token){
+        user = usuariosRepository.getCurrentUser(token);
+        return  user;
+    }
     public MutableLiveData<User> upgradeTecnico(String id){
         user = usuariosRepository.upgradeTecnico(id);
         return user;

@@ -201,7 +201,7 @@ public class UsuariosRepository {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    userProfile.postValue(response.body());
+                    userProfile.setValue(response.body());
                 }
             }
             @Override
