@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.satapp.common.MyApp;
+import com.example.satapp.models.Name;
 import com.example.satapp.models.User;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IUsuarioService;
@@ -58,7 +59,7 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
     public ServiceGenerator serviceGenerator;
     public TextView tvnombre, tvEmail, tvCreatedAt, tvUpdateAt, tvRole;
     public ImageView ivFoto, ivEmail, ivRol;
-    public Button btnEditarFoto,btnPromocionar,btnEditarPerfil,btnSalvarPerfil;
+    public Button btnEditarFoto,btnPromocionar,btnEditarPerfil,btnSalvarPerfil,btnBorrarFoto;
     Uri uriSelected;
     private static final int READ_REQUEST_CODE = 1234;
 
@@ -83,7 +84,15 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
         btnPromocionar = findViewById(R.id.btnPromocionar);
         btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
         btnSalvarPerfil = findViewById(R.id.btnSalvarEditPerfil);
+        btnBorrarFoto = findViewById(R.id.btnBorrarFoto);
         loadData();
+        btnBorrarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                usuarioViewModel.borrarFoto(id);
+                loadData();
+            }
+        });
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,10 +106,13 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fullname_txt = etEditarNombre.getText().toString();
-                RequestBody name = RequestBody.create(fullname_txt, MultipartBody.FORM);
+                Name name = new Name(fullname_txt);
                 usuarioViewModel.upgradeProfile(id,name).observe(DetalleUsuarioAdminActivity.this, new Observer<User>() {
                     @Override
                     public void onChanged(User user) {
+                        etEditarNombre.setVisibility(View.INVISIBLE);
+                        btnSalvarPerfil.setVisibility(View.INVISIBLE);
+                        loadData();
 
                     }
                 });
@@ -126,55 +138,7 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
                             @Override
                             public void onChanged(User user) {
 
-                                LocalDate createdAt = ConvertToDate(user.getCreatedAt());
-                                LocalDate updateAt = ConvertToDate(user.getUpdatedAt());
-                                DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
-                                if(user.getRole().equalsIgnoreCase("User")){
-                                    btnPromocionar.setVisibility(View.VISIBLE);
-                                }
-                                if(user.getName()==null){
-                                    tvnombre.setText("NA");
-                                }else{
-                                    tvnombre.setText(user.getName().toUpperCase());
-                                }
-
-                                tvRole.setText(user.getRole().toUpperCase());
-                                tvEmail.setText(user.getEmail());
-                                tvCreatedAt.setText("Cuenta creada el: " + createdAt.toString(fmt));
-                                tvUpdateAt.setText("Última actualización : " + updateAt.toString(fmt));
-                                if (user.getPicture() != null) {
-                                    Call<ResponseBody> call = service.getAvatarUser(id, UtilToken.getToken(getContext()));
-                                    call.enqueue(new Callback<ResponseBody>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                            Bitmap fotoBitMpa = BitmapFactory.decodeStream(response.body().byteStream());
-                                            Log.e("bitmap", fotoBitMpa.toString());
-                                            Glide.with(getContext())
-                                                    .load(fotoBitMpa)
-                                                    .circleCrop()
-                                                    .into(ivFoto);
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                                        }
-                                    });
-                                } else {
-                                    Glide.with(getContext())
-                                            .load("https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg")
-                                            .circleCrop()
-                                            .into(ivFoto);
-                                }
-
-                                ivFoto.setVisibility(View.VISIBLE);
-                                tvnombre.setVisibility(View.VISIBLE);
-                                tvEmail.setVisibility(View.VISIBLE);
-                                tvCreatedAt.setVisibility(View.VISIBLE);
-                                tvUpdateAt.setVisibility(View.VISIBLE);
-                                tvRole.setVisibility(View.VISIBLE);
-                                ivEmail.setVisibility(View.VISIBLE);
-                                ivRol.setVisibility(View.VISIBLE);
+                         loadData();
                             }
                         });
 
