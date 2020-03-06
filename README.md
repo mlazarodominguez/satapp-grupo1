@@ -56,6 +56,50 @@ El usuario administrador (admin@administrador.com:12345678).
 ###### REALIZADO POR MIGUEL
 
 
+#### GESTIÓN DE EQUIPOS
+
+
+- Petición de detalle de un equipo
+
+###### REALIZADO POR JOSE MANUEL
+
+- Petición de obtener las ubicaciones de los equipos
+
+###### REALIZADO POR JOSE MANUEL
+
+
+
+#### GESTIÓN DE TICKETS
+
+- Petición de crear un ticket
+
+###### REALIZADO POR JOSE MANUEL
+
+- Petición de obtener todos los tickets
+
+###### REALIZADO POR JOSE MANUEL
+
+- Petición de obtener todos los tickets de un inventariable
+
+###### REALIZADO POR JOSE MANUEL
+
+- Petición de obtener el detalle de un ticket
+
+###### REALIZADO POR JOSE MANUEL
+
+
+
+#### GESTIÓN DE ANOTACION
+
+- Intento de listar todas las anotaciones de un equipo
+
+###### REALIZADO POR JOSE MANUEL
+
+- Intento de obtener el detalle de una anotacion de un equipo
+
+###### REALIZADO POR JOSE MANUEL
+
+
 
 
 # AQUI TENEIS QUE EMPEZAR CON LO VUESTRO
