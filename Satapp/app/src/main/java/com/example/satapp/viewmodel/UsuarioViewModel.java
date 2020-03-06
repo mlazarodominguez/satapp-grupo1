@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.satapp.models.Name;
+import com.example.satapp.models.Password;
 import com.example.satapp.models.User;
 import com.example.satapp.repository.UsuariosRepository;
 
@@ -54,6 +55,16 @@ public class UsuarioViewModel extends AndroidViewModel {
     public MutableLiveData<User> getUser(String id){
         user = usuariosRepository.getUser(id);
         return user;
+    }
+
+    public MutableLiveData<User> getCurrentUser(String token){
+        user = usuariosRepository.getCurrentUser(token);
+        return  user;
+    }
+    public MutableLiveData<User> updatePassword(String id, String authHeader, Password password){
+        user = usuariosRepository.updatePassword(id,authHeader,password);
+        return user;
+
     }
     public MutableLiveData<User> upgradeTecnico(String id){
         user = usuariosRepository.upgradeTecnico(id);

@@ -16,6 +16,7 @@ import com.example.satapp.R;
 
 import com.example.satapp.common.MyApp;
 import com.example.satapp.models.Name;
+import com.example.satapp.models.Password;
 import com.example.satapp.models.User;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IUsuarioService;
@@ -193,6 +194,24 @@ public class UsuariosRepository {
         return data;
     }
 
+    public MutableLiveData<User> updatePassword(String id, String authHeader, Password password){
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        Call<User> call = service.updatePassword(id,authHeader,password);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                data.setValue(response.body());
+                Toast.makeText(MyApp.getContext(), "Contraseña actualizada", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Operación no permitida", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return  data;
+
+    }
 
     public MutableLiveData<User>getCurrentUser(String token) {
         final MutableLiveData<User> userProfile = new MutableLiveData<>();
@@ -201,7 +220,7 @@ public class UsuariosRepository {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    userProfile.postValue(response.body());
+                    userProfile.setValue(response.body());
                 }
             }
             @Override

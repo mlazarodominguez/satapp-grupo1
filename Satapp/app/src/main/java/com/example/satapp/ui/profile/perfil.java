@@ -48,7 +48,7 @@ public class perfil extends Fragment {
     public TextView tvnombre, tvEmail, tvCreatedAt, tvUpdateAt, tvRole;
     public ImageView ivFoto, ivEmail, ivRol;
 
-    public Button btnEditar,btnBorrar;
+    public Button btnEditar,btnBorrar ,btnBorrarFoto,btnEditarContraseña;
     IUsuarioService service;
     ServiceGenerator serviceGenerator;
 
@@ -79,6 +79,8 @@ public class perfil extends Fragment {
         ivRol = v.findViewById(R.id.imageViewRol);
         btnEditar = v.findViewById(R.id.btnEditarFoto);
         btnBorrar = v.findViewById(R.id.btnEditarPerfil);
+        btnBorrarFoto = v.findViewById(R.id.btnBorrarFoto);
+        btnEditarContraseña = v.findViewById(R.id.btnEditContraseña);
         loadData();
         return v;
     }
@@ -87,6 +89,8 @@ public class perfil extends Fragment {
 
         btnEditar.setVisibility(View.INVISIBLE);
         btnBorrar.setVisibility(View.INVISIBLE);
+        btnBorrarFoto.setVisibility(View.INVISIBLE);
+        btnEditarContraseña.setVisibility(View.INVISIBLE);
         ivFoto.setVisibility(View.GONE);
         tvnombre.setVisibility(View.GONE);
         tvEmail.setVisibility(View.GONE);
