@@ -67,8 +67,7 @@
                 android:id="@+id/progressBarLoadEditEquipo"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:visibility="gone" />
+                android:layout_height="250dp" />
 
             <EditText
                 android:id="@+id/editTextDescription"

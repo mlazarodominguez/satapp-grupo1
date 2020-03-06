@@ -1,18 +1,18 @@
 package com.example.satapp.ui.dashboard;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.satapp.R;
@@ -23,6 +23,7 @@ import com.example.satapp.retrofit.IEquipoService;
 import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.EquipoViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -38,6 +39,7 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
     private final EquipoViewModel equipoViewModel;
     UtilToken utilToken;
     Button btnBorrarEquipo;
+
 
     public MyEquiposListRecyclerViewAdapter(List<Equipo> items, Context ctx, int layout, EquipoViewModel equipoViewModel) {
         mValues = items;
@@ -69,7 +71,6 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.i("imagen","" + response.body().byteStream());
                 Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
 
 
@@ -121,6 +122,21 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         notifyDataSetChanged();
     }
 
+
+    public void updateList(List<Equipo> newList){
+        if(mValues != null) {
+            mValues.clear();
+        } else {
+            mValues = new ArrayList<>();
+        }
+
+        mValues.addAll(newList);
+        notifyDataSetChanged();
+    }
+
+
+
+
     @Override
     public int getItemCount() {
         if(mValues != null)
@@ -150,6 +166,8 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
 
 
         }
+
+
 
         @Override
         public String toString() {
