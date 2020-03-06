@@ -9,6 +9,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+
+import retrofit2.http.DELETE;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -29,12 +31,20 @@ public interface IEquipoService {
 
     @Multipart
     @POST("inventariable")
-    Call<Equipo> nuevoEquipo(@Query("access_token") String token,
-                             @Part MultipartBody.Part imagen,
-                             @Part("codigo") RequestBody codigo,
+    Call<Equipo> nuevoEquipo(@Part MultipartBody.Part imagen,
                              @Part("nombre") RequestBody nombre,
                              @Part("tipo") RequestBody tipo,
-                             @Part("descripcion") RequestBody descripcion);
+                             @Part("descripcion") RequestBody descripcion,
+                             @Part("ubicacion") RequestBody ubicacion,
+                             @Query("access_token") String token);
+
+
+
+    @GET("inventariable/tipos")
+    Call<List<String>> getAllTipos(@Query("access_token") String token);
+
+    @DELETE("inventariable/{id}")
+    Call<Equipo> deleteEquipo(@Path("id") String id, @Query("access_token") String token);
 
     @GET("inventariable/{id}")
     Call<Equipo> getEquipoDetalles(@Path("id")String id,
@@ -44,4 +54,10 @@ public interface IEquipoService {
     Call<Equipo> editInventariable(@Path("id") String id,
                                    @Query("access_token")String token,
                                    @Body Equipo equipo);
+    @Multipart
+    @PUT("inventariable/{id}/img")
+    Call<Equipo> editImg(@Path("id")String id,
+                         @Query("access_token") String token,
+                         @Part MultipartBody.Part imagen);
+
 }

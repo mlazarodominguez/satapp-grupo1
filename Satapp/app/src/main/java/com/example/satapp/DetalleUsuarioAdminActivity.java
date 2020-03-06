@@ -132,7 +132,12 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
                                 if(user.getRole().equalsIgnoreCase("User")){
                                     btnPromocionar.setVisibility(View.VISIBLE);
                                 }
-                                tvnombre.setText(user.getName().toUpperCase());
+                                if(user.getName()==null){
+                                    tvnombre.setText("NA");
+                                }else{
+                                    tvnombre.setText(user.getName().toUpperCase());
+                                }
+
                                 tvRole.setText(user.getRole().toUpperCase());
                                 tvEmail.setText(user.getEmail());
                                 tvCreatedAt.setText("Cuenta creada el: " + createdAt.toString(fmt));
@@ -202,7 +207,12 @@ public class DetalleUsuarioAdminActivity extends AppCompatActivity {
                 if(user.getRole().equalsIgnoreCase("user")){
                     btnPromocionar.setVisibility(View.VISIBLE);
                 }
-                tvnombre.setText(user.getName().toUpperCase());
+                if(user.getName()==null){
+                    tvnombre.setText("NA");
+                }else{
+                    tvnombre.setText(user.getName().toUpperCase());
+                }
+
                 tvRole.setText(user.getRole().toUpperCase());
                 tvEmail.setText(user.getEmail());
                 tvCreatedAt.setText("Cuenta creada el: " + createdAt.toString(fmt));

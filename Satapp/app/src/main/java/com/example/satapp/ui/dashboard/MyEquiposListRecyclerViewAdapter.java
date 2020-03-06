@@ -1,14 +1,10 @@
 package com.example.satapp.ui.dashboard;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ImageDecoder;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +12,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
-import com.example.satapp.EditInventariableActivity;
+import com.example.satapp.EquipoDetailActivity;
 import com.example.satapp.R;
+import com.example.satapp.TicketsEquipoActivity;
+import com.example.satapp.common.Constantes;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IEquipoService;
 import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.EquipoViewModel;
 
-
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEquiposListRecyclerViewAdapter.ViewHolder> {
 
@@ -42,6 +40,8 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
     private int layout;
     private final EquipoViewModel equipoViewModel;
     UtilToken utilToken;
+    Button btnBorrarEquipo;
+
 
     public MyEquiposListRecyclerViewAdapter(List<Equipo> items, Context ctx, int layout, EquipoViewModel equipoViewModel) {
         mValues = items;
@@ -62,9 +62,10 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.mItem = mValues.get(position);
 
         holder.titulo.setText(holder.mItem.getNombre());
+        holder.tipo.setText(holder.mItem.getTipo());
+        holder.ubicacion.setText(holder.mItem.getUbicacion());
 
         IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
-
 
         Call<ResponseBody> imagenEquipo = service.getImagenEquipo(holder.mItem.getId(),(utilToken.getToken(ctx)));
 
@@ -72,7 +73,6 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.i("imagen","" + response.body().byteStream());
                 Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
 
 
@@ -103,15 +103,44 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (equipoViewModel != null) {
+                    equipoViewModel.setEquipo(holder.mItem.getId());
+                }
+                Intent i = new Intent(ctx, EquipoDetailActivity.class);
+                i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, holder.mItem.getId());
+                ctx.startActivity(i);
             }
         });
+
+
+        btnBorrarEquipo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            equipoViewModel.deleteEquipo(holder.mItem.getId().toString(),utilToken.getToken(ctx));
+            }
+        });
+
     }
 
     public void setData(List<Equipo> equipoList){
         this.mValues = equipoList;
         notifyDataSetChanged();
     }
+
+
+    public void updateList(List<Equipo> newList){
+        if(mValues != null) {
+            mValues.clear();
+        } else {
+            mValues = new ArrayList<>();
+        }
+
+        mValues.addAll(newList);
+        notifyDataSetChanged();
+    }
+
+
+
 
     @Override
     public int getItemCount() {
@@ -125,6 +154,8 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         public final View mView;
         public final ImageView imagenEquipo;
         public final TextView titulo;
+        public final TextView tipo;
+        public final TextView ubicacion;
         public Equipo mItem;
         public Button btnEdit;
 
@@ -133,8 +164,15 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
             mView = view;
             imagenEquipo = (ImageView) view.findViewById(R.id.imageViewEquipo);
             titulo = (TextView) view.findViewById(R.id.textViewTituloEquipo);
+            tipo= view.findViewById(R.id.textViewTipoEquipo);
+            ubicacion = view.findViewById(R.id.textViewUbicacionEquipo);
+            btnBorrarEquipo = view.findViewById(R.id.buttonBorrarEquipo);
             btnEdit = view.findViewById(R.id.buttonEditMomentaneo);
+
+
         }
+
+
 
         @Override
         public String toString() {

@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.repository.EquipoRepository;
 
+import okhttp3.MultipartBody;
+
 public class EquipoEditViewModel extends AndroidViewModel {
     EquipoRepository equipoRepository;
     MutableLiveData<Equipo> equipo;
@@ -24,5 +26,9 @@ public class EquipoEditViewModel extends AndroidViewModel {
     }
     public void updateEquipo(String id,String token, Equipo equipo){
         equipoRepository.getInventaribleToEdit(id,token,equipo);
+    }
+
+    public void editImgEquipo(String id,String token, MultipartBody.Part img){
+        equipoRepository.editInventariableImg(id,token,img);
     }
 }

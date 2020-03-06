@@ -14,5 +14,15 @@
         <item name="colorControlHighlight">@color/amber_500</item>
     </style>
 
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
+        <!--Estilos Para pantalla completa-->
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
 </resources>
