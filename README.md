@@ -100,6 +100,84 @@ El usuario administrador (admin@administrador.com:12345678).
 ###### REALIZADO POR JOSE MANUEL
 
 
+#### Listar los equipos del centro,además un filtrado por texto y paginado
+
+- Se listan los equipos del centro, ademas de un filtrado por texto.
+
+###### REALIZADO POR JUAN ANTONIO LAGO
+
+#### Añadir un nuevo equipo
+
+- Añade un equipo nuevo perfectamente
+
+###### REALIZADO POR JUAN ANTONIO LAGO
+
+#### Borrar un equipo
+
+- Borra un equipo perfectamente.
+
+###### REALIZADO POR JUAN ANTONIO LAGO
+
+#### Compartir incidencia por whatsapp 
+
+- Comparte el nombre y la ubicación del equipo y la incidencia y la descripción de esta.
+
+###### REALIZADO POR JUAN ANTONIO LAGO
+
+#### Obtener imagen de ticket
+
+- He obtenido y programado las imagenes de todos los tickets
+
+###### REALIZADO POR JUAN ANTONIO LAGO
+
+
+#### Obtener imagen de ticket
+
+- He obtenido y programado las imagenes de todos los tickets
+
+###### REALIZADO POR JUAN ANTONIO LAGO
+
+
+#### Detalles Usuario
+
+- He obtenido el usuario y lo he pintado.
+
+###### REALIZADO POR VÍCTOR MIRANDA ALCÁNTARA
+
+#### QR para detalle de equipo
+
+- He usado una libreria para usar el qr.
+
+###### REALIZADO POR VÍCTOR MIRANDA ALCÁNTARA
+
+#### Detalle de equipo (Visual)
+
+- He cambiado visualmente el detalle equipo.
+
+###### REALIZADO POR VÍCTOR MIRANDA ALCÁNTARA
+
+#### Lista de tickets de equipos
+
+- He tenido que volver a programar la lista porque no pasaba bien el id del equipo.
+
+###### REALIZADO POR VÍCTOR MIRANDA ALCÁNTARA
+
+#### Añadir Ticket
+
+- He cambiado el activity de añadir por un dialog fragment y lo he restructurado para que obtuviera la id y lo actualizara la lista.
+
+###### REALIZADO POR VÍCTOR MIRANDA ALCÁNTARA
+
+#### Añadir Ticket
+
+- He cambiado el activity de añadir por un dialog fragment y lo he restructurado para que obtuviera la id y lo actualizara la lista.
+
+###### REALIZADO POR VÍCTOR MIRANDA ALCÁNTARA
+
+
+
+
+
 
 
 # AQUI TENEIS QUE EMPEZAR CON LO VUESTRO
