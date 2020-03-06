@@ -2,10 +2,10 @@ package com.example.satapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.SearchView;
 
 import com.example.satapp.common.Constantes;
 import com.example.satapp.viewmodel.EquipoViewModel;
+import com.example.satapp.viewmodel.UsuarioViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,9 +16,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     EquipoViewModel equipoViewModel;
+    UsuarioViewModel usuarioViewModel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,11 @@ public class MainActivity extends AppCompatActivity  {
         NavigationUI.setupWithNavController(navView, navController);
 
 
+
         equipoViewModel = new ViewModelProvider(this)
                 .get(EquipoViewModel.class);
+        usuarioViewModel = new ViewModelProvider(this)
+                .get(UsuarioViewModel.class);
 
         equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
             @Override
@@ -46,23 +52,24 @@ public class MainActivity extends AppCompatActivity  {
                     Intent i = new Intent(MainActivity.this, EditInventariableActivity.class);
                     i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
                     startActivity(i);
-                    finish();
                 }
             }
         });
 
-        equipoViewModel.getEquipo2().observe(MainActivity.this, new Observer<String>() {
+        usuarioViewModel.getUsuarioId().observe(MainActivity.this, new Observer<String>() {
             @Override
-            public void onChanged(String equipoId) {
-                if(equipoId != null) {
-                    Intent i = new Intent(MainActivity.this, TicketsEquipoActivity.class);
-                    i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
+            public void onChanged(String s) {
+                if(s!=null){
+                    Intent i = new Intent(MainActivity.this,DetalleUsuarioAdminActivity.class);
+                    i.putExtra("idUser",s);
                     startActivity(i);
-                    finish();
                 }
             }
         });
+
+
 
     }
+
 
 }
