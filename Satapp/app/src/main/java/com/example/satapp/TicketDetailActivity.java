@@ -2,6 +2,7 @@ package com.example.satapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -90,14 +91,23 @@ public class TicketDetailActivity extends AppCompatActivity {
             public void onChanged(TicketResponse ticketResponse) {
                 tvDescripcion.setText(ticketResponse.getDescripcion());
                 tvTitulo.setText(ticketResponse.getTitulo());
+
                 t = ticketResponse;
 
+                String img= ticketResponse.getFotos().get(0);
+                String[] params = img.split("/");
+                ticketDetailViewModel.getImagenTicket(params[params.length - 2], params[params.length - 1],UtilToken.getToken(MyApp.getContext())).observeForever(new Observer<Bitmap>() {
+                    @Override
+                    public void onChanged(Bitmap bitmap) {
 
-                //if (ticketResponse.getFotos().isEmpty())
-                Glide.with(TicketDetailActivity.this)
-                        .load(ticketResponse.getFotos().get(0))
-                        .centerCrop()
-                        .into(ivFoto);
+                        Glide.with(TicketDetailActivity.this)
+                                .load(bitmap)
+                                .centerCrop()
+                                .into(ivFoto);
+
+                    }
+                });
+
             }
 
 

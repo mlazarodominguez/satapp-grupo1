@@ -23,5 +23,8 @@ public interface AddTicketService {
             @Part("inventariable") RequestBody inventariable,
             @Part List<MultipartBody.Part> fotos
     );
+
+
+
 }
 

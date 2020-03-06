@@ -1,49 +1,27 @@
 package com.example.satapp.ui.dashboard.ticketsEquipo;
 
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.satapp.EquipoDetailActivity;
 import com.example.satapp.R;
 import com.example.satapp.TicketDetailActivity;
+import com.example.satapp.common.MyApp;
 import com.example.satapp.models.TicketsResponse;
 import com.example.satapp.models.UtilToken;
-import com.example.satapp.retrofit.IEquipoService;
-import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.TicketsEquipoViewModel;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyEquipoTicketsRecyclerViewAdapter.ViewHolder> {
 
@@ -63,6 +41,9 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_equipotickets, parent, false);
 
+
+
+
         return new ViewHolder(view);
     }
 
@@ -77,6 +58,24 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         holder.tvDescripcion.setText("Descripción: " + holder.mItem.getDescripcion());
         ticket = holder.mItem;
 
+        String img= holder.mItem.getFotos().get(0);
+        String[] params = img.split("/");
+        ticketsEquipoViewModel.getImagenTicket(params[params.length - 2], params[params.length - 1], UtilToken.getToken(MyApp.getContext())).observeForever(new Observer<Bitmap>() {
+            @Override
+            public void onChanged(Bitmap bitmap) {
+
+                Glide.with(context)
+                        .load(bitmap)
+                        .centerCrop()
+                        .into(holder.ivFoto);
+
+            }
+        });
+
+
+
+
+
         if (holder.mItem.getFotos().isEmpty())
             Glide.with(context).load("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png").into(holder.ivFoto);
         else
@@ -90,6 +89,10 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
                 context.startActivity(intent);
             }
         });
+
+
+
+
     }
 
     public void setData(List<TicketsResponse> list){

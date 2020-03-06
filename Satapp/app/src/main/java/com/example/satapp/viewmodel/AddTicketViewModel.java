@@ -28,4 +28,6 @@ public class AddTicketViewModel extends AndroidViewModel {
                                                         List<MultipartBody.Part> fotos) {
         return addTicketRepository.addTicket(titulo, descripcion, inventariable, fotos);
     }
+
+
 }
