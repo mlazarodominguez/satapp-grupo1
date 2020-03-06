@@ -20,6 +20,9 @@ public class User {
     @SerializedName("picture")
     @Expose
     private String picture;
+    @SerializedName("validated")
+    @Expose
+    private Boolean validated;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -57,6 +60,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Boolean getValidated() {
+        return validated;
+    }
+
+    public void setValidated(Boolean validated) {
+        this.validated = validated;
     }
 
     public String getPicture() {
