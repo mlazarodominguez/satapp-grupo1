@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.satapp.models.Name;
 import com.example.satapp.models.User;
 import com.example.satapp.repository.UsuariosRepository;
 
@@ -59,13 +60,16 @@ public class UsuarioViewModel extends AndroidViewModel {
         return user;
     }
 
-    public MutableLiveData<User> upgradeProfile(String id, RequestBody name){
+    public MutableLiveData<User> upgradeProfile(String id, Name name){
         user = usuariosRepository.updateUsuario(id, name);
         return  user;
     }
 
     public void borrarUsuario(String id){
         usuariosRepository.borrarUsuario(id);
+    }
+    public void borrarFoto(String id){
+        usuariosRepository.borrarImagen(id);
     }
 
     public void setUsuarioId(String usuarioId) {
