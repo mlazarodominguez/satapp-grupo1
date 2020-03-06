@@ -1,6 +1,7 @@
 package com.example.satapp.viewmodel;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -14,6 +15,7 @@ import java.util.List;
 public class TicketsEquipoViewModel extends AndroidViewModel {
     private MutableLiveData<List<TicketsResponse>> listTicketsEquipo;
     private UbicacionRepository ubicacionRepository;
+    private MutableLiveData<Bitmap> bitmapImg;
 
     public TicketsEquipoViewModel(@NonNull Application application) {
         super(application);
@@ -24,4 +26,9 @@ public class TicketsEquipoViewModel extends AndroidViewModel {
         listTicketsEquipo = ubicacionRepository.getTicketsEquipoList(id);
         return listTicketsEquipo;
     }
+    public MutableLiveData<Bitmap> getImagenTicket(String id, String img , String token) {
+        bitmapImg = ubicacionRepository.getImagenTicket(id,img,token);
+        return bitmapImg;
+    }
+
 }
