@@ -124,6 +124,7 @@ public class AddTicketActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(AddTicketActivity.this, TicketsEquipoActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

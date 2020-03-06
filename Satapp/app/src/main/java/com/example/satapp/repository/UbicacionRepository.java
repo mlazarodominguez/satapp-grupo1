@@ -5,6 +5,8 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.satapp.common.MyApp;
+import com.example.satapp.models.Equipo;
+import com.example.satapp.models.TicketResponse;
 import com.example.satapp.models.TicketsResponse;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IUbicacionService;
@@ -75,5 +77,25 @@ public class UbicacionRepository {
             }
         });
         return data;
+    }
+
+
+    public MutableLiveData<TicketResponse>getTicketDetail(String id, String token) {
+        final MutableLiveData<TicketResponse> ticketDetail = new MutableLiveData<>();
+
+        Call<TicketResponse> editInventariableCall = service.getTicketDetail(id,token);
+        editInventariableCall.enqueue(new Callback<TicketResponse>() {
+            @Override
+            public void onResponse(Call<TicketResponse> call, Response<TicketResponse> response) {
+                if(response.isSuccessful()){
+                    ticketDetail.setValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<TicketResponse> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return ticketDetail;
     }
 }

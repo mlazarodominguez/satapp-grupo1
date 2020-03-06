@@ -59,4 +59,12 @@ public class EquipoViewModel extends AndroidViewModel {
         return idEquipoSeleccionado;
     }
 
+    public MutableLiveData<String> getEquipo2() {
+        return idEquipoSeleccionado;
+    }
+
+    public MutableLiveData<String> getEquipo3() {
+        return idEquipoSeleccionado;
+    }
+
 }

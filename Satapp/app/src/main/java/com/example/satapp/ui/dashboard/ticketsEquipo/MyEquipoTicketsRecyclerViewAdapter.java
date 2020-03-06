@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.satapp.EquipoDetailActivity;
 import com.example.satapp.R;
+import com.example.satapp.TicketDetailActivity;
 import com.example.satapp.models.TicketsResponse;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IEquipoService;
@@ -84,7 +85,9 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, TicketDetailActivity.class);
+                intent.putExtra("idTicketDetail", holder.mItem.getId());
+                context.startActivity(intent);
             }
         });
     }

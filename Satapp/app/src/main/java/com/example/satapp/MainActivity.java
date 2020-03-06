@@ -1,19 +1,16 @@
 package com.example.satapp;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.satapp.common.Constantes;
+
 import com.example.satapp.common.MyApp;
 import com.example.satapp.models.User;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IUsuarioService;
 import com.example.satapp.retrofit.ServiceGenerator;
+
 import com.example.satapp.viewmodel.EquipoViewModel;
 import com.example.satapp.viewmodel.UsuarioViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,10 +22,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import java.util.List;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class MainActivity extends AppCompatActivity {
 

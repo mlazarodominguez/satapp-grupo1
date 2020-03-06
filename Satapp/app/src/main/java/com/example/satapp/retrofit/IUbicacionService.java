@@ -1,5 +1,6 @@
 package com.example.satapp.retrofit;
 
+import com.example.satapp.models.TicketResponse;
 import com.example.satapp.models.TicketsResponse;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface IUbicacionService {
 
     @GET("/ticket/inventariable/{id}")
     Call<List<TicketsResponse>> getListTicketsEquipo(@Path("id") String id, @Query("access_token") String access_token);
+
+    @GET("/ticket/{id}")
+    Call<TicketResponse> getTicketDetail(@Path("id") String id, @Query("access_token") String access_token);
 }

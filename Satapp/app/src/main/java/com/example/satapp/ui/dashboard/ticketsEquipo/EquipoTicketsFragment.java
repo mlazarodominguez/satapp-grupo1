@@ -99,8 +99,6 @@ public class EquipoTicketsFragment extends Fragment {
                 @Override
                 public void onChanged(List<TicketsResponse> ticketsResponses) {
                     ticketsList = ticketsResponses;
-                    Intent intent = new Intent(getActivity(), AddTicketActivity.class);
-                    intent.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, extras.getString(Constantes.EXTRA_ID_INVENTARIABLE));
                     adapter.setData(ticketsList);
                 }
             });
