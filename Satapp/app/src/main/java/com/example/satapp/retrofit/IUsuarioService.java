@@ -1,6 +1,7 @@
 package com.example.satapp.retrofit;
 
 import com.example.satapp.models.LoginReponse;
+import com.example.satapp.models.Name;
 import com.example.satapp.models.User;
 import com.example.satapp.models.UserLogin;
 
@@ -60,11 +61,12 @@ public interface IUsuarioService {
 
     @GET("users/me")
     Call<User> profile(@Query("access_token")String token);
-    @Multipart
+
     @PUT("users/{id}")
-    Call<User> updateProfile(@Path("id") String id,@Query("access_token")String token,@Part("name") RequestBody fullname);
+    Call<User> updateProfile(@Path("id") String id,@Query("access_token")String token,@Body Name name);
 
-
+    @DELETE("users/{id}/img")
+    Call<ResponseBody> borrarFoto(@Path("id")String id,@Query("access_token")String token);
     @PUT("users/{id}/tecnico")
     Call<User> upgradeTecnico(@Path("id")String id,@Query("access_token")String token);
     @GET("users/{id}")
