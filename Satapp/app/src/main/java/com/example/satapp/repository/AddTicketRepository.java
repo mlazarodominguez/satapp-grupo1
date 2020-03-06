@@ -27,12 +27,13 @@ public class AddTicketRepository {
         service = serviceGenerator.createService(AddTicketService.class);
     }
 
-    public MutableLiveData<AddTicketResponse> addTicket(List<MultipartBody.Part> avatar,
-                                                        RequestBody titulo,
-                                                        RequestBody descripcion) {
+    public MutableLiveData<AddTicketResponse> addTicket(RequestBody titulo,
+                                                        RequestBody descripcion,
+                                                        RequestBody inventariable,
+                                                        List<MultipartBody.Part> fotos) {
         final MutableLiveData<AddTicketResponse> data = new MutableLiveData<>();
 
-        Call<AddTicketResponse> call = service.addTicket(UtilToken.getToken(MyApp.getContext()), avatar, titulo, descripcion);
+        Call<AddTicketResponse> call = service.addTicket(UtilToken.getToken(MyApp.getContext()), titulo, descripcion, inventariable, fotos);
         call.enqueue(new Callback<AddTicketResponse>() {
             @Override
             public void onResponse(Call<AddTicketResponse> call, Response<AddTicketResponse> response) {

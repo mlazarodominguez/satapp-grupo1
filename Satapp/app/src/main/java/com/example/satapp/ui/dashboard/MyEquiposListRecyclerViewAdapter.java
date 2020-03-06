@@ -15,8 +15,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.satapp.EquipoDetailActivity;
 import com.example.satapp.R;
 import com.example.satapp.TicketsEquipoActivity;
+import com.example.satapp.common.Constantes;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IEquipoService;
@@ -101,9 +103,12 @@ public class MyEquiposListRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ctx, TicketsEquipoActivity.class);
-                intent.putExtra("idEquipo", holder.mItem.getId());
-                ctx.startActivity(intent);
+                if (equipoViewModel != null) {
+                    equipoViewModel.setEquipo(holder.mItem.getId());
+                }
+                Intent i = new Intent(ctx, EquipoDetailActivity.class);
+                i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, holder.mItem.getId());
+                ctx.startActivity(i);
             }
         });
 

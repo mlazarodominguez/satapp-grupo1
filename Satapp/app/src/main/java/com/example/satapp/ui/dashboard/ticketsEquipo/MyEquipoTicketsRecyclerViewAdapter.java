@@ -64,34 +64,6 @@ public class MyEquipoTicketsRecyclerViewAdapter extends RecyclerView.Adapter<MyE
         else
             Glide.with(context).load(holder.mItem.getFotos()).into(holder.ivFoto);
 
-        /*
-        IEquipoService service = ServiceGenerator.createService(IEquipoService.class);
-
-        Call<ResponseBody> call = service.getImagenEquipo(holder.mItem.getId(), UtilToken.getToken(context));
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.i("imagen","" + response.body().byteStream());
-                Log.d("cuerpo", response.body().toString());
-                if (response.isSuccessful()) {
-                    Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
-
-                    if (holder.mItem.getFotos().isEmpty())
-                        Glide.with(context).load("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png").into(holder.ivFoto);
-                    else
-                        Glide.with(context).load(fotoBitMap).into(holder.ivFoto);
-                } else
-                    Toast.makeText(context, "Fallo", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload error", t.getMessage());
-            }
-        });
-        */
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

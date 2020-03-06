@@ -50,7 +50,6 @@ public class EquipoViewModel extends AndroidViewModel {
         return equipo;
     }
 
-
     public void setEquipo(String id) {
         this.idEquipoSeleccionado.setValue(id);
     }
@@ -59,4 +58,5 @@ public class EquipoViewModel extends AndroidViewModel {
     public MutableLiveData<String> getEquipo() {
         return idEquipoSeleccionado;
     }
+
 }

@@ -60,6 +60,14 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 new IntentIntegrator(MainActivity.this).initiateScan();
+        equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
+            @Override
+            public void onChanged(String equipoId) {
+                if(equipoId != null) {
+                    Intent i = new Intent(MainActivity.this, TicketsEquipoActivity.class);
+                    i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
+                    startActivity(i);
+                }
             }
         });
 
