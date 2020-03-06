@@ -2,12 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.satapp">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 
     <application
         android:name=".common.MyApp"
@@ -17,13 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TicketDetailActivity"></activity>
+        <activity android:name=".AnotacionDetailActivity"></activity>
+        <activity android:name=".TicketDetailActivity" />
         <activity android:name=".AddTicketActivity" />
         <activity android:name=".TicketsEquipoActivity" />
-
-        <activity android:name=".DetalleUsuarioAdminActivity"></activity>
+        <activity android:name=".DetalleUsuarioAdminActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".EquipoDetailActivity"></activity>
+        <activity android:name=".EquipoDetailActivity" />
         <activity android:name=".EditInventariableActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -43,9 +41,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
 
 </manifest>
