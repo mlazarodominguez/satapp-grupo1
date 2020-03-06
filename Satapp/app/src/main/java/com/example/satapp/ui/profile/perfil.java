@@ -47,7 +47,7 @@ public class perfil extends Fragment {
     public String jwt;
     public TextView tvnombre, tvEmail, tvCreatedAt, tvUpdateAt, tvRole;
     public ImageView ivFoto, ivEmail, ivRol;
-    public ProgressBar pbLoading;
+
     public Button btnEditar,btnBorrar;
     IUsuarioService service;
     ServiceGenerator serviceGenerator;
@@ -84,7 +84,7 @@ public class perfil extends Fragment {
     }
 
     public void loadData (){
-        pbLoading.setVisibility(View.VISIBLE);
+
         btnEditar.setVisibility(View.INVISIBLE);
         btnBorrar.setVisibility(View.INVISIBLE);
         ivFoto.setVisibility(View.GONE);
@@ -100,7 +100,7 @@ public class perfil extends Fragment {
         userProfileViewModel.getCurrentUser(jwt).observe(getActivity(),new Observer<User>(){
             @Override
             public void onChanged(User user){
-                pbLoading.setVisibility(View.GONE);
+
                 LocalDate createdAt = ConvertToDate(user.getCreatedAt());
                 LocalDate updateAt = ConvertToDate(user.getUpdatedAt());
                 DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");

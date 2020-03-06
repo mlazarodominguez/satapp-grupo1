@@ -18,14 +18,10 @@
 
         <activity android:name=".DetalleUsuarioAdminActivity"></activity>
         <activity android:name=".RegisterActivity" />
-
-
         <activity android:name=".EquipoDetailActivity"></activity>
         <activity android:name=".AddTicketActivity" />
         <activity android:name=".TicketsEquipoActivity" />
-
         <activity android:name=".EditInventariableActivity" />
-
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
