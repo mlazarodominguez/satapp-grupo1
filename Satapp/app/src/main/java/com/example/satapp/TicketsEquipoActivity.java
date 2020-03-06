@@ -34,13 +34,14 @@ public class TicketsEquipoActivity extends AppCompatActivity {
         equipoViewModel = new ViewModelProvider(this)
                 .get(EquipoViewModel.class);
 
-        equipoViewModel.getEquipo().observe(this, new Observer<String>() {
+        equipoViewModel.getEquipo3().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String equipoId) {
                 if(equipoId != null) {
                     Intent i = new Intent(TicketsEquipoActivity.this, AddTicketActivity.class);
                     i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
                     startActivity(i);
+                    finish();
                 }
             }
         });

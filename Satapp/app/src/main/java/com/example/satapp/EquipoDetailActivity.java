@@ -95,6 +95,7 @@ public class EquipoDetailActivity extends AppCompatActivity {
                         Intent i = new Intent(EquipoDetailActivity.this, TicketsEquipoActivity.class);
                         i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipo.getId());
                         startActivity(i);
+                        finish();
                     }
                 });
             }
