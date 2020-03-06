@@ -1,11 +1,20 @@
 package com.example.satapp;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.widget.SearchView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.satapp.common.Constantes;
+import com.example.satapp.common.MyApp;
+import com.example.satapp.models.User;
+import com.example.satapp.retrofit.IUsuarioService;
+import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.EquipoViewModel;
+import com.example.satapp.viewmodel.UsuarioViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,9 +25,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity  {
+import java.util.List;
+
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
+public class MainActivity extends AppCompatActivity {
 
     EquipoViewModel equipoViewModel;
+    UsuarioViewModel usuarioViewModel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +52,11 @@ public class MainActivity extends AppCompatActivity  {
         NavigationUI.setupWithNavController(navView, navController);
 
 
+
         equipoViewModel = new ViewModelProvider(this)
                 .get(EquipoViewModel.class);
+        usuarioViewModel = new ViewModelProvider(this)
+                .get(UsuarioViewModel.class);
 
         equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
             @Override
@@ -50,17 +69,20 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
-        equipoViewModel.getEquipo().observe(MainActivity.this, new Observer<String>() {
+        usuarioViewModel.getUsuarioId().observe(MainActivity.this, new Observer<String>() {
             @Override
-            public void onChanged(String equipoId) {
-                if(equipoId != null) {
-                    Intent i = new Intent(MainActivity.this, TicketsEquipoActivity.class);
-                    i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, equipoId);
+            public void onChanged(String s) {
+                if(s!=null){
+                    Intent i = new Intent(MainActivity.this,DetalleUsuarioAdminActivity.class);
+                    i.putExtra("idUser",s);
                     startActivity(i);
                 }
             }
         });
 
+
+
     }
+
 
 }
