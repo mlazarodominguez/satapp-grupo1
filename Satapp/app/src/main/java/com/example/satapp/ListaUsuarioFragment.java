@@ -65,7 +65,7 @@ public class ListaUsuarioFragment extends Fragment {
         allValidated = view.findViewById(R.id.btnListaNoValidados);
         context = view.getContext();
 
-        loadUser();
+
 
         allUsers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class ListaUsuarioFragment extends Fragment {
             }
         });
 
-        //loadValidated();
+
 
         return view;
     }
@@ -135,6 +135,12 @@ public class ListaUsuarioFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        loadUser();
+
+    }
 }
 

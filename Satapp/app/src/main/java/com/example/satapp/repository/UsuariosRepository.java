@@ -15,6 +15,8 @@ import com.example.satapp.common.Constantes;
 import com.example.satapp.R;
 
 import com.example.satapp.common.MyApp;
+import com.example.satapp.models.Name;
+import com.example.satapp.models.Password;
 import com.example.satapp.models.User;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IUsuarioService;
@@ -85,7 +87,7 @@ public class UsuariosRepository {
     return data;
     }
 
-    public MutableLiveData<User> updateUsuario(String id, RequestBody name){
+    public MutableLiveData<User> updateUsuario(String id, Name name){
         final MutableLiveData<User> data = new MutableLiveData<>();
         Call<User> call = service.updateProfile(id, UtilToken.getToken(MyApp.getContext()),name);
         call.enqueue(new Callback<User>() {
@@ -143,6 +145,20 @@ public class UsuariosRepository {
         return data;
     }
 
+    public void borrarImagen(String id){
+        Call<ResponseBody> call = service.borrarFoto(id,UtilToken.getToken(MyApp.getContext()));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Toast.makeText(MyApp.getContext(),"Imagen Borrada" ,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
     public void borrarUsuario(String id){
 
         Call<ResponseBody> call = service.borrarUsuario(id,UtilToken.getToken(MyApp.getContext()));
@@ -178,6 +194,24 @@ public class UsuariosRepository {
         return data;
     }
 
+    public MutableLiveData<User> updatePassword(String id, String authHeader, Password password){
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        Call<User> call = service.updatePassword(id,authHeader,password);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                data.setValue(response.body());
+                Toast.makeText(MyApp.getContext(), "Contraseña actualizada", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Operación no permitida", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return  data;
+
+    }
 
     public MutableLiveData<User>getCurrentUser(String token) {
         final MutableLiveData<User> userProfile = new MutableLiveData<>();
@@ -186,7 +220,7 @@ public class UsuariosRepository {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    userProfile.postValue(response.body());
+                    userProfile.setValue(response.body());
                 }
             }
             @Override

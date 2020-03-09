@@ -1,32 +1,25 @@
 package com.example.satapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.bumptech.glide.Glide;
 import com.example.satapp.common.Constantes;
+import com.example.satapp.common.MyApp;
 import com.example.satapp.models.Equipo;
 import com.example.satapp.models.UtilToken;
-import com.example.satapp.retrofit.IEquipoService;
-import com.example.satapp.retrofit.ServiceGenerator;
 import com.example.satapp.viewmodel.EquipoEditViewModel;
 import com.example.satapp.viewmodel.EquipoViewModel;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.satapp.viewmodel.TicketDetailViewModel;
 
 public class EquipoDetailActivity extends AppCompatActivity {
 
@@ -36,6 +29,12 @@ public class EquipoDetailActivity extends AppCompatActivity {
     Bundle bundle;
     String id, jwt;
     EquipoEditViewModel equipoEditViewModel;
+    EquipoViewModel equipoViewModelImagen;
+    TicketDetailViewModel ticketDetailViewModel;
+
+    Bundle extras;
+    Equipo e;
+    UtilToken utilToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,8 @@ public class EquipoDetailActivity extends AppCompatActivity {
 
     private void retrofitInit() {
         equipoViewModel = new ViewModelProvider(this).get(EquipoViewModel.class);
-        equipoEditViewModel = new ViewModelProvider(this).get(EquipoEditViewModel.class);
+        equipoViewModelImagen = new ViewModelProvider(this).get(EquipoViewModel.class);
+        extras = getIntent().getExtras();
     }
 
     private void findViews() {
@@ -73,16 +73,17 @@ public class EquipoDetailActivity extends AppCompatActivity {
                 tvTipo.setText(equipo.getTipo());
                 tvTitulo.setText(equipo.getNombre());
 
-                equipoViewModel.getImagenEquipo(id, jwt).observe(EquipoDetailActivity.this, new Observer<Bitmap>() {
+
+                equipoViewModelImagen.getImagenEquipo(equipo.getId(),(utilToken.getToken(MyApp.getContext()))).observe(EquipoDetailActivity.this, new Observer<Bitmap>() {
                     @Override
                     public void onChanged(Bitmap bitmap) {
-
                         Glide.with(EquipoDetailActivity.this)
                                 .load(bitmap)
                                 .centerCrop()
                                 .into(ivFoto);
                     }
                 });
+
 
                 tvTickets.setText("Ver Tickets");
 
@@ -92,9 +93,16 @@ public class EquipoDetailActivity extends AppCompatActivity {
                         Intent i = new Intent(EquipoDetailActivity.this, TicketsEquipoActivity.class);
                         i.putExtra(Constantes.EXTRA_ID_INVENTARIABLE, id);
                         startActivity(i);
+                        finish();
                     }
                 });
+
+
+
             }
         });
     }
+
+
+
 }

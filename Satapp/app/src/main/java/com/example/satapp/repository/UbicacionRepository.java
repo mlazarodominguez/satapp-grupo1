@@ -1,10 +1,13 @@
 package com.example.satapp.repository;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.satapp.common.MyApp;
+import com.example.satapp.models.TicketResponse;
 import com.example.satapp.models.TicketsResponse;
 import com.example.satapp.models.UtilToken;
 import com.example.satapp.retrofit.IUbicacionService;
@@ -12,6 +15,7 @@ import com.example.satapp.retrofit.ServiceGenerator;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,4 +80,45 @@ public class UbicacionRepository {
         });
         return data;
     }
+
+
+    public MutableLiveData<TicketResponse>getTicketDetail(String id, String token) {
+        final MutableLiveData<TicketResponse> ticketDetail = new MutableLiveData<>();
+
+        Call<TicketResponse> editInventariableCall = service.getTicketDetail(id,token);
+        editInventariableCall.enqueue(new Callback<TicketResponse>() {
+            @Override
+            public void onResponse(Call<TicketResponse> call, Response<TicketResponse> response) {
+                if(response.isSuccessful()){
+                    ticketDetail.setValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<TicketResponse> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return ticketDetail;
+    }
+
+    public MutableLiveData<Bitmap> getImagenTicket(String id,String img ,String token) {
+        final MutableLiveData<Bitmap> imagenBitMap = new MutableLiveData<>();
+        Call<ResponseBody> imagenTicket = service.imagenTicket(id,img, token);
+        imagenTicket.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.isSuccessful()){
+                    Bitmap fotoBitMap = BitmapFactory.decodeStream(response.body().byteStream());
+                    imagenBitMap.setValue(fotoBitMap);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error in the connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return imagenBitMap;
+    }
+
 }

@@ -7,8 +7,8 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="389dp"
-        android:layout_height="114dp"
+        android:layout_width="388dp"
+        android:layout_height="116dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

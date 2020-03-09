@@ -46,4 +46,6 @@ public class Equipo {
                 this.descripcion = descripcion;
                 this.ubicacion = ubicacion;
         }
+
+
 }
